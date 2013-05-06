@@ -22,6 +22,33 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
 
     @InjectDao(clazz = EmployeeEntity.class)
     private EntityDao<EmployeeEntity> employeeEntityDao;
+    
+    @Override
+    public void batchInsertSearchEmployee(String source, List<String> sourceIdList) {
+        List<Map<String, String>> empMapList = new ArrayList<Map<String, String>>(500);
+        EmployeeEntity empEntity;
+        Map<String, String> empMap;
+        String empId;
+        for (String sourceId : sourceIdList) {
+            empId = this.createEmpId(source, sourceId);
+            empEntity = this.employeeEntityDao.inquireByKey(empId);
+            if (empEntity == null) {
+                empMap = new HashMap<String, String>(8, 1);
+                empMap.put("empId", empId);
+                empMap.put("gender", "");
+                empMap.put("nickName", "");
+                empMap.put("empName", "");
+                empMap.put("location", "");
+                empMap.put("tag", "");
+                empMap.put("lastUpdateTime", "1");
+                empMap.put("state", "0");
+                empMapList.add(empMap);
+            }
+        }
+        if (empMapList.isEmpty() == false) {
+            this.employeeEntityDao.batchInsert(empMapList);
+        }
+    }
 
     @Override
     public void batchInsertEmployee(String source, List<String> sourceIdList) {

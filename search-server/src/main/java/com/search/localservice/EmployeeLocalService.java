@@ -16,6 +16,8 @@ public interface EmployeeLocalService extends Local {
     public int STATE_NORMAL = 0;
     
     public int STATE_EXCEPTION = 1;
+    
+    public void batchInsertSearchEmployee(String source, List<String> sourceIdList);
 
     public void batchInsertEmployee(String source, List<String> sourceIdList);
 

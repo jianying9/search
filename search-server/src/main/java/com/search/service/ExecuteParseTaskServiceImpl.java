@@ -42,7 +42,7 @@ public class ExecuteParseTaskServiceImpl implements Service {
 
     @Override
     public void execute(MessageContext messageContext) {
-        InquireResult<TaskEntity> inquireResult = this.taskLocalService.inquireSpiderTask(messageContext.getPageIndex(), messageContext.getPageSize());
+        InquireResult<TaskEntity> inquireResult = this.taskLocalService.inquireParseTask(messageContext.getPageIndex(), messageContext.getPageSize());
         if (inquireResult.isEmpty() == false) {
             List<TaskEntity> taskEntityList = inquireResult.getResultList();
             Task task;

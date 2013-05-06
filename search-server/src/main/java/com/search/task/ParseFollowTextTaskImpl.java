@@ -57,7 +57,7 @@ public class ParseFollowTextTaskImpl implements Task {
         String sourceId;
         Iterator<JsonNode> sourceIdNodeIterator;
         String flag;
-        List<String> sorceIdList = new ArrayList<String>(500);
+        List<String> sourceIdList = new ArrayList<String>(500);
         try {
             while (textIdNodeIterator.hasNext()) {
                 textIdNode = textIdNodeIterator.next();
@@ -74,13 +74,15 @@ public class ParseFollowTextTaskImpl implements Task {
                     while (sourceIdNodeIterator.hasNext()) {
                         sourceIdNode = sourceIdNodeIterator.next();
                         sourceId = sourceIdNode.getTextValue();
-                        sorceIdList.add(sourceId);
+                        if(sourceIdList.contains(sourceId) == false) {
+                            sourceIdList.add(sourceId);
+                        }
                     }
                 }
             }
         } catch (IOException e) {
         }
-        this.employeeLocalService.batchInsertEmployee(source, sorceIdList);
+        this.employeeLocalService.batchInsertEmployee(source, sourceIdList);
         this.taskLocalService.updateFinishedTask(this.taskEntity.getTaskId());
     }
 }

@@ -8,7 +8,6 @@ import com.wolf.framework.dao.condition.Condition;
 import com.wolf.framework.dao.condition.InquireContext;
 import com.wolf.framework.dao.condition.OperateTypeEnum;
 import com.wolf.framework.local.LocalServiceConfig;
-import com.wolf.framework.utils.NumberUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +56,7 @@ public class SourceSessionLocalServiceImpl implements SourceSessionLocalService 
         if (sessionIdList.isEmpty()) {
             throw new RuntimeException("SourceSessionLocalServiceImpl error:Can not find any session in source:".concat(sourceEnum.name()));
         } else {
-            int index = NumberUtils.getRandomIntegerValue(sessionIdList.size());
-            String sessionId = sessionIdList.get(index);
+            String sessionId = sessionIdList.get(0);
             sessionEntity = this.sourceSessionEntityDao.inquireByKey(sessionId);
         }
         return sessionEntity;

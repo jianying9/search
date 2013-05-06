@@ -106,6 +106,7 @@ public class TaskLocalServiceImpl implements TaskLocalService {
                 }
             }
             context = rootNode.toString();
+            System.out.println(context);
             Map<String, String> updateMap = new HashMap<String, String>(4, 1);
             updateMap.put("taskId", taskId);
             updateMap.put("state", Integer.toString(TaskLocalService.STATE_PARSE));

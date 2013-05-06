@@ -41,7 +41,7 @@ public class SpiderSearchTaskImpl implements Task {
         String location = contextNode.get("location").getTextValue();
         Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
         parameterMap.put("source", source);
-        parameterMap.put("tag", source);
+        parameterMap.put("tag", tag);
         parameterMap.put("location", location);
         FrameworkSessionBeanRemote frameworkSessionBeanRemote = SpiderRemoteManager.getBrowserProxySessionBeanRemote();
         String result = frameworkSessionBeanRemote.execute("GET_SEARCH_TEXT", parameterMap);
