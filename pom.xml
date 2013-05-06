@@ -140,5 +140,6 @@
         <module>spider-server</module>
         <module>search-server</module>
         <module>spider-remote-api</module>
-    </modules>
+    <module>search-web</module>
+  </modules>
 </project>
