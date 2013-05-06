@@ -38,8 +38,18 @@
             </dependency>
             <dependency>
                 <groupId>com.wolf</groupId>
+                <artifactId>wolf-remote-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wolf</groupId>
                 <artifactId>browser-proxy-api</artifactId>
                 <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wolf</groupId>
+                <artifactId>spider-remote-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -126,8 +136,9 @@
             </plugin>
         </plugins>
     </build>
-  <modules>
-    <module>spider-server</module>
-    <module>search-server</module>
-  </modules>
+    <modules>
+        <module>spider-server</module>
+        <module>search-server</module>
+        <module>spider-remote-api</module>
+    </modules>
 </project>

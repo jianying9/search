@@ -5,7 +5,7 @@ import com.spider.entity.SourceSessionEntity;
 import com.spider.httpclient.HttpClientManager;
 import com.wolf.browser.BrowserProxySessionBeanRemote;
 import com.wolf.browser.BrowserProxySessionBeanRemoteFactory;
-import com.wolf.framework.local.LocalService;
+import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.local.LocalServiceConfig;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
     private final int checkCodeLength = 5;
     private final String loginBtnXPath = "/html/body/div/div[2]/div[2]/div[2]/div/div[6]/a/span";
     //
-    @LocalService()
+    @InjectLocalService()
     private SourceSessionLocalService sourceSessionLocalService;
 
     public SinaSourceLocalServiceImpl() {

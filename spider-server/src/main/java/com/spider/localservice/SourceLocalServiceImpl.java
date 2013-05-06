@@ -3,7 +3,7 @@ package com.spider.localservice;
 import com.spider.config.SourceEnum;
 import com.spider.entity.SourceSessionEntity;
 import com.spider.source.SourceHandler;
-import com.wolf.framework.local.LocalService;
+import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.local.LocalServiceConfig;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +20,10 @@ import java.util.Set;
 description = "负责获取外部渠道的信息")
 public class SourceLocalServiceImpl implements SourceLocalService {
 
-    @LocalService()
+    @InjectLocalService()
     private SinaSourceLocalService sinaSourceLocalService;
     //
-    @LocalService()
+    @InjectLocalService()
     private SourceSessionLocalService sourceSessionLocalService;
 
     private SourceHandler getSourceHandler(SourceEnum sourceEnum) {

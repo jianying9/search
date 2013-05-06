@@ -5,7 +5,7 @@ import com.spider.config.SourceEnum;
 import com.spider.entity.SourceSessionEntity;
 import com.spider.parameter.SourceParameter;
 import com.spider.localservice.SourceLocalService;
-import com.wolf.framework.local.LocalService;
+import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.service.ParameterTypeEnum;
 import com.wolf.framework.service.Service;
 import com.wolf.framework.service.ServiceConfig;
@@ -26,7 +26,7 @@ description = "增加第三方渠道session")
 public class InsertSourceSessionServiceImpl implements Service {
 
     //
-    @LocalService()
+    @InjectLocalService()
     private SourceLocalService sourceLocalService;
 
     @Override

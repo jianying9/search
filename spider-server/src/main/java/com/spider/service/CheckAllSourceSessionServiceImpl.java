@@ -2,7 +2,7 @@ package com.spider.service;
 
 import com.spider.config.ActionNames;
 import com.spider.localservice.SourceLocalService;
-import com.wolf.framework.local.LocalService;
+import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.service.ParameterTypeEnum;
 import com.wolf.framework.service.Service;
 import com.wolf.framework.service.ServiceConfig;
@@ -20,7 +20,7 @@ response = true,
 description = "检测第三方渠道登录信息")
 public class CheckAllSourceSessionServiceImpl implements Service {
 
-    @LocalService()
+    @InjectLocalService()
     private SourceLocalService sourceLocalService;
     //
 

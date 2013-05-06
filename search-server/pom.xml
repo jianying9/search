@@ -21,11 +21,7 @@
         </dependency>
         <dependency>
             <groupId>com.wolf</groupId>
-            <artifactId>wolf-remote</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.wolf</groupId>
-            <artifactId>browser-proxy-api</artifactId>
+            <artifactId>spider-remote-api</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

@@ -2,13 +2,9 @@ package com.search.localservice;
 
 import com.search.entity.EmployeeEntity;
 import com.wolf.framework.dao.EntityDao;
-import com.wolf.framework.dao.InquireKeyResult;
-import com.wolf.framework.dao.annotation.DAO;
-import com.wolf.framework.dao.condition.Condition;
+import com.wolf.framework.dao.InquireResult;
+import com.wolf.framework.dao.annotation.InjectDao;
 import com.wolf.framework.dao.condition.InquireContext;
-import com.wolf.framework.dao.condition.OperateTypeEnum;
-import com.wolf.framework.dao.condition.Order;
-import com.wolf.framework.dao.condition.OrderTypeEnum;
 import com.wolf.framework.local.LocalServiceConfig;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,15 +20,17 @@ import java.util.Map;
 description = "负责操作employee表")
 public class EmployeeLocalServiceImpl implements EmployeeLocalService {
 
-    @DAO(clazz = EmployeeEntity.class)
+    @InjectDao(clazz = EmployeeEntity.class)
     private EntityDao<EmployeeEntity> employeeEntityDao;
 
     @Override
-    public void batchInsertEmpId(List<String> empIdList) {
+    public void batchInsertEmployee(String source, List<String> sourceIdList) {
+        List<Map<String, String>> empMapList = new ArrayList<Map<String, String>>(500);
         EmployeeEntity empEntity;
         Map<String, String> empMap;
-        List<Map<String, String>> empMapList = new ArrayList<Map<String, String>>(empIdList.size());
-        for (String empId : empIdList) {
+        String empId;
+        for (String sourceId : sourceIdList) {
+            empId = this.createEmpId(source, sourceId);
             empEntity = this.employeeEntityDao.inquireByKey(empId);
             if (empEntity == null) {
                 empMap = new HashMap<String, String>(8, 1);
@@ -53,21 +51,13 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
     }
 
     @Override
-    public List<String> inquireTopOld() {
-        Condition condition = new Condition("state", OperateTypeEnum.EQUAL, "0");
-        Order order = new Order("lastUpdateTime", OrderTypeEnum.ASC);
-        InquireContext inquireContext = new InquireContext();
-        inquireContext.setPageIndex(1);
-        inquireContext.setPageSize(20);
-        inquireContext.addCondition(condition);
-        inquireContext.addOrder(order);
-        InquireKeyResult inquireKeyResult = this.employeeEntityDao.inquirePageKeysByCondition(inquireContext);
-        return inquireKeyResult.getResultList();
-    }
-
-    @Override
-    public void batchUpdate(List<Map<String, String>> updateMapList) {
+    public void batchUpdate(String source, List<Map<String, String>> updateMapList) {
+        String empId;
+        String sourceId;
         for (Map<String, String> updateMap : updateMapList) {
+            sourceId = updateMap.get("sourceId");
+            empId = this.createEmpId(source, sourceId);
+            updateMap.put("empId", empId);
             updateMap.put("state", "0");
             updateMap.put("lastUpdateTime", Long.toString(System.currentTimeMillis()));
         }
@@ -79,13 +69,6 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
         Map<String, String> updateMap = new HashMap<String, String>(4, 1);
         updateMap.put("empId", empId);
         updateMap.put("state", "1");
-        updateMap.put("lastUpdateTime", Long.toString(System.currentTimeMillis()));
-        this.employeeEntityDao.update(updateMap);
-    }
-
-    @Override
-    public void update(Map<String, String> updateMap) {
-        updateMap.put("state", "0");
         updateMap.put("lastUpdateTime", Long.toString(System.currentTimeMillis()));
         this.employeeEntityDao.update(updateMap);
     }
@@ -104,5 +87,10 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
         String userName = empId.substring(index + 1);
         String[] result = {source, userName};
         return result;
+    }
+
+    @Override
+    public InquireResult<EmployeeEntity> inquireEmployee(InquireContext inquireContext) {
+        return this.employeeEntityDao.inquirePageByCondition(inquireContext);
     }
 }

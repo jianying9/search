@@ -3,7 +3,7 @@ package com.spider.localservice;
 import com.spider.config.SourceEnum;
 import com.spider.entity.SourceSessionEntity;
 import com.wolf.framework.dao.EntityDao;
-import com.wolf.framework.dao.annotation.DAO;
+import com.wolf.framework.dao.annotation.InjectDao;
 import com.wolf.framework.dao.condition.Condition;
 import com.wolf.framework.dao.condition.InquireContext;
 import com.wolf.framework.dao.condition.OperateTypeEnum;
@@ -22,7 +22,7 @@ import java.util.Map;
 description = "负责操作SourceSession表")
 public class SourceSessionLocalServiceImpl implements SourceSessionLocalService {
 
-    @DAO(clazz = SourceSessionEntity.class)
+    @InjectDao(clazz = SourceSessionEntity.class)
     private EntityDao<SourceSessionEntity> sourceSessionEntityDao;
 
     @Override

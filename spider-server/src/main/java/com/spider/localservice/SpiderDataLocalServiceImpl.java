@@ -4,7 +4,7 @@ import com.spider.hentity.HSpiderFollowEntity;
 import com.spider.hentity.HSpiderInfoEntity;
 import com.spider.hentity.HSpiderSearchEntity;
 import com.wolf.framework.dao.HEntityDao;
-import com.wolf.framework.dao.annotation.HDAO;
+import com.wolf.framework.dao.annotation.InjectHDao;
 import com.wolf.framework.local.LocalServiceConfig;
 import java.util.List;
 import java.util.Map;
@@ -18,13 +18,13 @@ import java.util.Map;
 description = "爬虫数据操作接口")
 public class SpiderDataLocalServiceImpl implements SpiderDataLocalService{
     
-    @HDAO(clazz = HSpiderSearchEntity.class)
+    @InjectHDao(clazz = HSpiderSearchEntity.class)
     private HEntityDao<HSpiderSearchEntity> hSpiderSearchEntityDao;
     
-    @HDAO(clazz = HSpiderInfoEntity.class)
+    @InjectHDao(clazz = HSpiderInfoEntity.class)
     private HEntityDao<HSpiderInfoEntity> hSpiderInfoEntityDao;
     
-    @HDAO(clazz = HSpiderFollowEntity.class)
+    @InjectHDao(clazz = HSpiderFollowEntity.class)
     private HEntityDao<HSpiderFollowEntity> hSpiderFollowEntityDao;
 
     @Override

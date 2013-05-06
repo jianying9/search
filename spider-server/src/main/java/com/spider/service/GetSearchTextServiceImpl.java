@@ -2,10 +2,10 @@ package com.spider.service;
 
 import com.spider.config.ActionNames;
 import com.spider.config.SourceEnum;
-import com.spider.parameter.SourceParameter;
 import com.spider.localservice.SourceLocalService;
 import com.spider.localservice.SpiderDataLocalService;
-import com.wolf.framework.local.LocalService;
+import com.spider.parameter.SourceParameter;
+import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.service.ParameterTypeEnum;
 import com.wolf.framework.service.Service;
 import com.wolf.framework.service.ServiceConfig;
@@ -31,10 +31,10 @@ response = true,
 description = "抓取第三方渠道搜索结果文本服务")
 public class GetSearchTextServiceImpl implements Service {
 
-    @LocalService()
+    @InjectLocalService()
     private SourceLocalService sourceLocalService;
     //
-    @LocalService()
+    @InjectLocalService()
     private SpiderDataLocalService spiderDataLocalService;
     //
 
@@ -54,7 +54,7 @@ public class GetSearchTextServiceImpl implements Service {
         final String textIdprefix = textIdPrefixBuilder.toString();
         for (int pageIndex = 1; pageIndex < 100; pageIndex++) {
             text = this.sourceLocalService.getSearchText(sourceEnum, location, tag, pageIndex);
-            if (text.length() > 0) {
+            if (text.length() == 0) {
                 break;
             } else {
                 textId = textIdprefix.concat(Integer.toString(pageIndex));

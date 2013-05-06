@@ -5,7 +5,7 @@ import com.spider.config.SourceEnum;
 import com.spider.parameter.SourceParameter;
 import com.spider.localservice.SourceLocalService;
 import com.spider.localservice.SpiderDataLocalService;
-import com.wolf.framework.local.LocalService;
+import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.service.ParameterTypeEnum;
 import com.wolf.framework.service.Service;
 import com.wolf.framework.service.ServiceConfig;
@@ -28,10 +28,10 @@ response = true,
 description = "抓取第三方渠道用户关注信息文本服务")
 public class GetFollowTextServiceImpl implements Service {
 
-    @LocalService()
+    @InjectLocalService()
     private SourceLocalService sourceLocalService;
     //
-    @LocalService()
+    @InjectLocalService()
     private SpiderDataLocalService spiderDataLocalService;
 
     @Override
