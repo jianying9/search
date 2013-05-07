@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="search">
+    <link rel="stylesheet" href="libs/css/animate.css"/>
+    <link rel="stylesheet" href="libs/css/yy.css"/>
+    <link rel="stylesheet" href="css/search.css"/>
+    <script type="text/javascript" src="libs/scripts/modernizr-2.6.2.js"></script>
+    <script type="text/javascript" src="libs/scripts/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="libs/scripts/jquery.mousewheel.js"></script>
+</head>
+<body>
+<script type="text/javascript" src="libs/scripts/yy.js"></script>
+<script type="text/javascript" src="libs/scripts/crypto-js-core.js"></script>
+<script type="text/javascript" src="libs/scripts/crypto-js-md5.js"></script>
+<script type="text/javascript" src="libs/scripts/yy-module.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //初始化配置
+        $.yyConfig({
+            searchServer:'ws://192.168.19.219:5880/search-server/socket.io',
+            defaultServer:'ws://192.168.19.219:5880/search-server/socket.io',
+            logLevel:4
+        });
+        //加载主模块
+        $.yyLoadModule('search-main');
+//        $.yyLoadModule('team-user', function(yy) {
+//            var loginForm = yy.findInModule('team-login-form');
+//            loginForm.loadData({userEmail:'ljy18659199765@gmail.com'});
+//            loginForm.loadData({userEmail:'ljy18659199765@gmail.com', password:'000000'});
+//            var msg = loginForm.getData();
+//            msg.act = 'LOGIN';
+//            loginForm.sendMessage(msg);
+//        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+/**
+ * User: zoe
+ * Date: 12/21/12
+ * Time: 10:50 AM
+ */
+body, div, input, textarea {
+    margin: 0;
+    padding: 0;
+}
+
+input, textarea {
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    display: block;
+}
+
+body {
+    background: #E6E6E6;
+    font: 12px Arial, "宋体", Helvetica, sans-serif;
+    position: relative;
+    overflow: hidden;
+    -moz-user-select: none;
+    color: #393939;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: #2887BD;
+    color: black;
+}
+
+.yy_h2 {
+    font-size: 18px;
+    font-weight: bold;
+    height: 20px;
+    padding: 10px 0;
+}
+
+.yy_label {
+    font-weight: bold;
+    height: 14px;
+    padding: 9px 0;
+}
+
+.yy_text {
+    color: #939393;
+    height: 14px;
+}
+
+.yy_close {
+    height: 18px;
+    width: 18px;
+    background: url(/libs/css/images/icon.png) no-repeat -414px -108px;
+}
+
+.yy_close:hover {
+    background-position: -414px -90px;
+}
+
+.yy_panel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.yy_form {
+    padding: 4px;
+}
+
+.yy_form input {
+    width: 250px;
+    background-color: #E9E9E9;
+    border: 1px solid #BFBFBF;
+    border-radius: 3px;
+    height: 18px;
+    padding: 6px 0;
+}
+
+.yy_button {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    background: #24A828;
+    border-radius: 3px;
+    font-size: 14px;
+    height: 14px;
+    width: 120px;
+    padding: 10px 16px;
+}
+
+.yy_button:hover {
+    background: #1F9323;
+}
+
+.yy_button:active {
+    background: #1B7E1E;
+}
+
+.yy_link {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    color: #939393;
+    border-bottom: 1px solid #939393;
+    height: 14px;
+}
+
+.yy_link:hover {
+    color: #000000;
+    border-color: #000000;
+}
+
+/*-------------------------------------------------search-main---------------------------------------*/
+
+.search_main {
+    height: 100%;
+}
+
+.main_header {
+    height: 30px;
+    background: #23658B;
+    padding: 5px 8px;
+}
+
+.main_header_button {
+    cursor: pointer;
+    min-width: 120px;
+    text-align: center;
+    border-radius: 3px;
+    color: #E3E3E3;
+    font-weight: bold;
+    margin-right: 15px;
+    padding: 8px;
+    background: #2B7CAB;
+    float: right;
+    position: relative;
+}
+
+.main_header_button:hover {
+    background: #3291C8;
+}
+
+.main_header_button:active {
+    background: #2B7CAB;
+}
+
+.main_content {
+    position: relative;
+    overflow: hidden;
+    zoom: 1;
+    height: 95%;
+    margin: 5px 0 0 5px;
+}
+
+/*-------------------------------------------------search-task---------------------------------------*/
+
+.search_task {
+    width: 800px;
+    height: 600px;
+}
+
+.search_task_header {
+    margin: 2px 0 0 0;
+}
+
+.search_task_list {
+    margin: 2px 0 0 0;
+    max-height: 95%;
+}
+
+.search_task_list .yy_list_item {
+    border-bottom: 1px solid gainsboro;
+}
+
+.search_task_list .yy_list_item div {
+    display: inline-block;
+    font-size: 12px;
+    height: 12px;
+    width: 120px;
+    padding: 6px 10px;
+}
+
+.insert_search_task_window {
+    top: 100px;
+    left: 100px;
+}
+
+.insert_search_task_form {
+    margin: 0 80px;
+}
+
+
+
+
+
+
+
+
+
