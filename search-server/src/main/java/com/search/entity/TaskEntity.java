@@ -7,6 +7,7 @@ import com.wolf.framework.dao.annotation.DaoConfig;
 import com.wolf.framework.data.DataTypeEnum;
 import com.wolf.framework.service.parameter.Parameter;
 import com.wolf.framework.service.parameter.ParameterConfig;
+import com.wolf.framework.service.parameter.ParameterTypeEnum;
 import com.wolf.framework.service.parameter.ParametersConfig;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class TaskEntity extends Entity implements Parameter {
     private String source;
     //
     @ColumnConfig(dataTypeEnum = DataTypeEnum.CHAR_4000, desc = "上下文参数")
-    @ParameterConfig(dateTypeEnum = DataTypeEnum.CHAR_4000, desc = "上下文参数")
+    @ParameterConfig(parameterTypeEnum = ParameterTypeEnum.JSON, dateTypeEnum = DataTypeEnum.CHAR_4000, desc = "上下文参数")
     private String context;
     //
     @ParameterConfig(dateTypeEnum = DataTypeEnum.DATE_TIME, desc = "最后更新时间")

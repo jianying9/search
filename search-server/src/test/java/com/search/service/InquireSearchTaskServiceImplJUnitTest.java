@@ -13,9 +13,9 @@ import org.junit.Test;
  *
  * @author aladdin
  */
-public class InsertSearchTaskServiceImplJUnitTest extends AbstractSearchTest {
+public class InquireSearchTaskServiceImplJUnitTest extends AbstractSearchTest {
 
-    public InsertSearchTaskServiceImplJUnitTest() {
+    public InquireSearchTaskServiceImplJUnitTest() {
     }
 
     @BeforeClass
@@ -34,12 +34,9 @@ public class InsertSearchTaskServiceImplJUnitTest extends AbstractSearchTest {
     @Test
     public void test() {
         Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
-//        parameterMap.put("tag", "android");
-//        parameterMap.put("tag", "iphone");
-        parameterMap.put("tag", "c++");
-        parameterMap.put("location", "福建");
-        parameterMap.put("source", "SINA");
-        String result = this.testHandler.execute(ActionNames.INSERT_SEARCH_TASK, parameterMap);
+        parameterMap.put("pageIndex", "1");
+        parameterMap.put("pageSize", "15");
+        String result = this.testHandler.execute(ActionNames.INQUIRE_SEARCH_TASK, parameterMap);
         System.out.println(result);
     }
 }

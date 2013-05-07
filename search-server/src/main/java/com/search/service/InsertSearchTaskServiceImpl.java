@@ -1,6 +1,7 @@
 package com.search.service;
 
 import com.search.config.ActionNames;
+import com.search.entity.TaskEntity;
 import com.search.localservice.TaskLocalService;
 import com.search.parameter.SourceParameter;
 import com.wolf.framework.local.InjectLocalService;
@@ -17,7 +18,8 @@ import com.wolf.framework.worker.context.MessageContext;
         actionName = ActionNames.INSERT_SEARCH_TASK,
 parameterTypeEnum = ParameterTypeEnum.PARAMETER,
 importantParameter = {"source", "location", "tag"},
-parametersConfigs = {SourceParameter.class},
+returnParameter = {"taskId", "type", "state", "source", "context", "lastUpdateTime"},
+parametersConfigs = {SourceParameter.class, TaskEntity.class},
 validateSession = false,
 response = true,
 description = "新增一个搜索任务")
@@ -31,7 +33,8 @@ public class InsertSearchTaskServiceImpl implements Service {
         String source = messageContext.getParameter("source");
         String location = messageContext.getParameter("location");
         String tag = messageContext.getParameter("tag");
-        this.taskLocalService.insertSearchTask(source, location, tag);
+        TaskEntity taskEntity = this.taskLocalService.insertSearchTask(source, location, tag);
+        messageContext.setEntityData(taskEntity);
         messageContext.success();
     }
 }

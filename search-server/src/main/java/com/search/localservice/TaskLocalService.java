@@ -28,7 +28,7 @@ public interface TaskLocalService extends Local{
     
     public void insertInfoTask(String source, List<String> sourceIdList);
     
-    public void insertSearchTask(String source, String location, String tag);
+    public TaskEntity insertSearchTask(String source, String location, String tag);
     
     public void insertFollowTask(String source, List<String> sourceIdList);
     
@@ -43,4 +43,6 @@ public interface TaskLocalService extends Local{
     public InquireResult<TaskEntity> inquireSpiderTask(int pageIndex, int pageSize);
     
     public InquireResult<TaskEntity> inquireParseTask(int pageIndex, int pageSize);
+    
+    public InquireResult<TaskEntity> inquireSearchTask(int pageIndex, int pageSize);
 }

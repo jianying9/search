@@ -7,6 +7,8 @@ import com.wolf.framework.dao.annotation.InjectDao;
 import com.wolf.framework.dao.condition.Condition;
 import com.wolf.framework.dao.condition.InquireContext;
 import com.wolf.framework.dao.condition.OperateTypeEnum;
+import com.wolf.framework.dao.condition.Order;
+import com.wolf.framework.dao.condition.OrderTypeEnum;
 import com.wolf.framework.local.LocalServiceConfig;
 import java.io.IOException;
 import java.util.HashMap;
@@ -60,7 +62,7 @@ public class TaskLocalServiceImpl implements TaskLocalService {
     }
 
     @Override
-    public void insertSearchTask(String source, String location, String tag) {
+    public TaskEntity insertSearchTask(String source, String location, String tag) {
         Map<String, String> insertMap = new HashMap<String, String>(8, 1);
         insertMap.put("type", Integer.toString(TaskLocalService.TYPE_SEARCH));
         insertMap.put("state", Integer.toString(TaskLocalService.STATE_SPIDER));
@@ -71,7 +73,7 @@ public class TaskLocalServiceImpl implements TaskLocalService {
         rootNode.put("tag", tag);
         String context = rootNode.toString();
         insertMap.put("context", context);
-        this.taskEntityDao.insert(insertMap);
+        return this.taskEntityDao.insertAndInquire(insertMap);
     }
 
     @Override
@@ -154,6 +156,19 @@ public class TaskLocalServiceImpl implements TaskLocalService {
         inquireContext.setPageSize(pageSize);
         Condition condition = new Condition("state", OperateTypeEnum.EQUAL, Integer.toString(TaskLocalService.STATE_PARSE));
         inquireContext.addCondition(condition);
+        InquireResult<TaskEntity> inquireResult = this.taskEntityDao.inquirePageByCondition(inquireContext);
+        return inquireResult;
+    }
+
+    @Override
+    public InquireResult<TaskEntity> inquireSearchTask(int pageIndex, int pageSize) {
+        InquireContext inquireContext = new InquireContext();
+        inquireContext.setPageIndex(pageIndex);
+        inquireContext.setPageSize(pageSize);
+        Condition condition = new Condition("type", OperateTypeEnum.EQUAL, Integer.toString(TaskLocalService.TYPE_SEARCH));
+        inquireContext.addCondition(condition);
+        Order order = new Order("lastUpdateTime", OrderTypeEnum.DESC);
+        inquireContext.addOrder(order);
         InquireResult<TaskEntity> inquireResult = this.taskEntityDao.inquirePageByCondition(inquireContext);
         return inquireResult;
     }
