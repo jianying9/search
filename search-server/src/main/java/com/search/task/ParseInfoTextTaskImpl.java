@@ -34,7 +34,7 @@ public class ParseInfoTextTaskImpl implements Task {
 
     @Override
     public void doWhenRejected() {
-        this.taskLocalService.updateExceptionTask(this.taskEntity.getTaskId());
+        this.taskLocalService.updateParseExceptionTask(this.taskEntity.getTaskId());
     }
 
     @Override
@@ -90,7 +90,11 @@ public class ParseInfoTextTaskImpl implements Task {
             }
         } catch (IOException e) {
         }
-        this.employeeLocalService.batchUpdate(source, infoMapList);
-        this.taskLocalService.updateFinishedTask(this.taskEntity.getTaskId());
+        if (infoMapList.isEmpty()) {
+            this.taskLocalService.updateParseExceptionTask(this.taskEntity.getTaskId());
+        } else {
+            this.employeeLocalService.batchUpdate(source, infoMapList);
+            this.taskLocalService.updateFinishedTask(this.taskEntity.getTaskId());
+        }
     }
 }

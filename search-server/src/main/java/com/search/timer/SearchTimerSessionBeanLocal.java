@@ -10,4 +10,8 @@ import javax.ejb.Local;
 public interface SearchTimerSessionBeanLocal {
     
     public void executeSpiderTask();
+    
+    public void executeParseTask();
+    
+    public void autoInsertUpdateTask();
 }

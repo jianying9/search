@@ -262,6 +262,10 @@ $.yyLoadPlugin({
                     var html = '<div class="yy_scroll"></div>';
                     yy.$this.append(html);
                     yy.extend.scroll = {};
+                    yy.extend.pageIndex = 1;
+                    yy.extend.pageSize = 15;
+                    yy.extend.pageNum = 0;
+                    yy.extend.pageTotal = 0;
                     yy._initScroll = function () {
                         var $this = this.$this;
                         var scrollHeight = $this[0].scrollHeight;
@@ -283,6 +287,14 @@ $.yyLoadPlugin({
                             var newTop = scrollHeight - clientHeight;
                             scroll.scrollTop(newTop);
                             $this.scrollTop(newTop);
+                        }
+                    };
+                    yy._scrollTop = function () {
+                        if (yy.extend.hasScroll = true) {
+                            var scroll = yy.extend.scroll;
+                            var $this = yy.$this;
+                            scroll.scrollTop(0);
+                            $this.scrollTop(0);
                         }
                     };
                     this._listeners.addEventListener({
@@ -332,6 +344,30 @@ $.yyLoadPlugin({
                     if (!this._dataToHtml) {
                         throw 'Un init list method dataToHtml!id:' + this.id;
                     }
+                };
+                yy.getPageIndex = function() {
+                    return this.extend.pageIndex;
+                };
+                yy.setPageIndex = function(pageIndex) {
+                    this.extend.pageIndex = pageIndex;
+                };
+                yy.getPageSize = function() {
+                    return this.extend.pageSize;
+                };
+                yy.setPageSize = function(pageSize) {
+                    this.extend.pageSize = pageSize;
+                };
+                yy.getPageNum = function() {
+                    return this.extend.pageNum;
+                };
+                yy.setPageNum = function(pageNum) {
+                    this.extend.pageNum = pageNum;
+                };
+                yy.getPageTotal = function() {
+                    return this.extend.pageTotal;
+                };
+                yy.setPageTotal = function(pageTotal) {
+                    this.extend.pageTotal = pageTotal;
                 };
                 yy.init = function (config) {
                     this._dataToHtml = config.dataToHtml;
@@ -394,6 +430,45 @@ $.yyLoadPlugin({
                         }
                     });
                     that._initScroll();
+                };
+                yy.addItemDataFirst = function (itemData) {
+                    var item;
+                    this.check();
+                    var that = this;
+                    var key = that.extend.key;
+                    var html = '';
+                    var localData = that.extend.data;
+                    var id = itemData[key];
+                    if (!id) {
+                        throw 'list addItemDataToTop error! can not find value by key:' + key;
+                    }
+                    if (localData[id]) {
+                        item = this.findInChildren(id);
+                    } else {
+                        var itemEventListener = that.extend.itemEventListener;
+                        localData[id] = itemData;
+                        html += '<div id="' + id + '" class="yy_list_item"';
+                        if (itemEventListener) {
+                            html += ' yyEventListener="' + itemEventListener + '"';
+                        }
+                        html += '>';
+                        html += that._dataToHtml(itemData);
+                        html += '</div>';
+
+                        that.$this.children(':first-child').before(html);
+                        //
+                        item = that._parsers.parse({
+                            loaderId:that.loaderId,
+                            type:'yy_list_item',
+                            $this:$('#' + id),
+                            parent:that,
+                            group:that,
+                            window:that.window
+                        });
+                    }
+                    that._initScroll();
+                    that._scrollTop();
+                    return item;
                 };
                 yy.addItemData = function (itemData) {
                     var item;

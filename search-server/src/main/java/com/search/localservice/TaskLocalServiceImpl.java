@@ -108,7 +108,6 @@ public class TaskLocalServiceImpl implements TaskLocalService {
                 }
             }
             context = rootNode.toString();
-            System.out.println(context);
             Map<String, String> updateMap = new HashMap<String, String>(4, 1);
             updateMap.put("taskId", taskId);
             updateMap.put("state", Integer.toString(TaskLocalService.STATE_PARSE));
@@ -124,12 +123,20 @@ public class TaskLocalServiceImpl implements TaskLocalService {
         updateMap.put("state", Integer.toString(TaskLocalService.STATE_FINISHED));
         this.taskEntityDao.update(updateMap);
     }
-
+    
     @Override
-    public void updateExceptionTask(String taskId) {
+    public void updateSpiderExceptionTask(String taskId) {
         Map<String, String> updateMap = new HashMap<String, String>(2, 1);
         updateMap.put("taskId", taskId);
-        updateMap.put("state", Integer.toString(TaskLocalService.STATE_EXCEPTION));
+        updateMap.put("state", Integer.toString(TaskLocalService.STATE_SPIDER_EXCEPTION));
+        this.taskEntityDao.update(updateMap);
+    }
+
+    @Override
+    public void updateParseExceptionTask(String taskId) {
+        Map<String, String> updateMap = new HashMap<String, String>(2, 1);
+        updateMap.put("taskId", taskId);
+        updateMap.put("state", Integer.toString(TaskLocalService.STATE_PARSE_EXCEPTION));
         this.taskEntityDao.update(updateMap);
     }
 

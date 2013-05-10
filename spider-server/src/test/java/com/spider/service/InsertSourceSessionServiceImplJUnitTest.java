@@ -37,7 +37,8 @@ public class InsertSourceSessionServiceImplJUnitTest extends AbstractSpiderTest 
     @Test
     public void test() {
         List<Map<String, String>> mapList = new ArrayList<Map<String, String>>(10);
-        String[] userNames = {"hr10240001@163.com", "hr10240002@163.com", "hr10240003@163.com", "hr10240004@163.com", "hr10240005@163.com", "hr10240006@163.com", "hr10240007@163.com", "hr10240008@163.com", "hr10240009@163.com", "hr10240010@163.com", "hr10240011@163.com", "hr10240012@163.com", "hr10240013@163.com", "hr10240014@163.com", "hr10240015@163.com", "hr10240016@163.com", "hr10240017@163.com", "hr10240018@163.com", "hr10240019@163.com", "hr10240020@163.com"};
+//        String[] userNames = {"hr10240001@163.com", "hr10240002@163.com", "hr10240003@163.com", "hr10240004@163.com", "hr10240005@163.com", "hr10240006@163.com", "hr10240007@163.com", "hr10240008@163.com", "hr10240009@163.com", "hr10240010@163.com", "hr10240011@163.com", "hr10240012@163.com", "hr10240013@163.com", "hr10240014@163.com", "hr10240015@163.com", "hr10240016@163.com", "hr10240017@163.com", "hr10240018@163.com", "hr10240019@163.com", "hr10240020@163.com"};
+        String[] userNames = {"hr10240011@163.com", "hr10240012@163.com","hr10240018@163.com"};
         Map<String, String> parameterMap;
         for (String userName : userNames) {
             parameterMap = new HashMap<String, String>(4, 1);

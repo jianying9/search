@@ -21,22 +21,22 @@ import org.codehaus.jackson.node.ArrayNode;
  * @author aladdin
  */
 public class ParseSearchTextTaskImpl implements Task {
-
+    
     private final TaskLocalService taskLocalService;
     private final EmployeeLocalService employeeLocalService;
     private final TaskEntity taskEntity;
-
+    
     public ParseSearchTextTaskImpl(TaskLocalService taskLocalService, EmployeeLocalService employeeLocalService, TaskEntity taskEntity) {
         this.taskLocalService = taskLocalService;
         this.employeeLocalService = employeeLocalService;
         this.taskEntity = taskEntity;
     }
-
+    
     @Override
     public void doWhenRejected() {
-        this.taskLocalService.updateExceptionTask(this.taskEntity.getTaskId());
+        this.taskLocalService.updateParseExceptionTask(this.taskEntity.getTaskId());
     }
-
+    
     @Override
     public void run() {
         JsonNode contextNode = this.taskLocalService.parseContext(this.taskEntity.getContext());
@@ -74,7 +74,7 @@ public class ParseSearchTextTaskImpl implements Task {
                     while (sourceIdNodeIterator.hasNext()) {
                         sourceIdNode = sourceIdNodeIterator.next();
                         sourceId = sourceIdNode.getTextValue();
-                        if(sourceIdList.contains(sourceId) == false) {
+                        if (sourceIdList.contains(sourceId) == false) {
                             sourceIdList.add(sourceId);
                         }
                     }
@@ -82,7 +82,11 @@ public class ParseSearchTextTaskImpl implements Task {
             }
         } catch (IOException e) {
         }
-        this.employeeLocalService.batchInsertSearchEmployee(source, sourceIdList);
-        this.taskLocalService.updateFinishedTask(this.taskEntity.getTaskId());
+        if (sourceIdList.isEmpty()) {
+            this.taskLocalService.updateParseExceptionTask(this.taskEntity.getTaskId());
+        } else {
+            this.employeeLocalService.batchInsertSearchEmployee(source, sourceIdList);
+            this.taskLocalService.updateFinishedTask(this.taskEntity.getTaskId());
+        }
     }
 }

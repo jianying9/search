@@ -24,7 +24,9 @@ public interface TaskLocalService extends Local{
     
     public int STATE_FINISHED = 0;
     
-    public int STATE_EXCEPTION = 99;
+    public int STATE_SPIDER_EXCEPTION = 199;
+    
+    public int STATE_PARSE_EXCEPTION = 299;
     
     public void insertInfoTask(String source, List<String> sourceIdList);
     
@@ -36,7 +38,9 @@ public interface TaskLocalService extends Local{
     
     public void updateFinishedTask(String taskId);
     
-    public void updateExceptionTask(String taskId);
+    public void updateSpiderExceptionTask(String taskId);
+    
+    public void updateParseExceptionTask(String taskId);
     
     public JsonNode parseContext(String context);
     

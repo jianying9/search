@@ -23,6 +23,7 @@ public class SourceSessionLocalServiceImpl implements SourceSessionLocalService 
 
     @InjectDao(clazz = SourceSessionEntity.class)
     private EntityDao<SourceSessionEntity> sourceSessionEntityDao;
+    private int index = 0;
 
     @Override
     public void insertSourceSession(SourceEnum sourceEnum, String userName, String cookie) {
@@ -56,8 +57,14 @@ public class SourceSessionLocalServiceImpl implements SourceSessionLocalService 
         if (sessionIdList.isEmpty()) {
             throw new RuntimeException("SourceSessionLocalServiceImpl error:Can not find any session in source:".concat(sourceEnum.name()));
         } else {
-            String sessionId = sessionIdList.get(0);
-            sessionEntity = this.sourceSessionEntityDao.inquireByKey(sessionId);
+            synchronized (this) {
+                if(this.index >= sessionIdList.size()) {
+                    this.index = 0;
+                }
+                String sessionId = sessionIdList.get(this.index);
+                sessionEntity = this.sourceSessionEntityDao.inquireByKey(sessionId);
+                this.index++;
+            }
         }
         return sessionEntity;
     }

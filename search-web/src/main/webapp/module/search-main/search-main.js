@@ -25,6 +25,22 @@ $.yyLoadListener('search-main', {
                     searchTaskWindow.bounceIn();
                 }
             }
+        },
+        searchEmployeeListener:{
+            click:function (yy) {
+                var mainPanel = yy.findInModule('main-content');
+                var searchEmployeeWindow = mainPanel.openWindow({
+                    class:'yy_hide',
+                    key:'search-employee-window'
+                });
+                searchEmployeeWindow.setHeaderLabel('人才库');
+                searchEmployeeWindow.loadModule('search-employee');
+                if (searchEmployeeWindow.isVisible()) {
+                    searchEmployeeWindow.bounceOut();
+                } else {
+                    searchEmployeeWindow.bounceIn();
+                }
+            }
         }
     },
     messageListener:{

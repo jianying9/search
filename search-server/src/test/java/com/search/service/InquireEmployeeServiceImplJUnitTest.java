@@ -1,8 +1,7 @@
-package com.spider.service;
+package com.search.service;
 
-import com.spider.AbstractSpiderTest;
-import com.spider.config.ActionNames;
-import com.wolf.framework.config.DefaultResponseFlagEnum;
+import com.search.AbstractSearchTest;
+import com.search.config.ActionNames;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.After;
@@ -14,9 +13,9 @@ import org.junit.Test;
  *
  * @author aladdin
  */
-public class ParseSearchTextServiceImplJUnitTest extends AbstractSpiderTest {
+public class InquireEmployeeServiceImplJUnitTest extends AbstractSearchTest {
 
-    public ParseSearchTextServiceImplJUnitTest() {
+    public InquireEmployeeServiceImplJUnitTest() {
     }
 
     @BeforeClass
@@ -35,9 +34,10 @@ public class ParseSearchTextServiceImplJUnitTest extends AbstractSpiderTest {
     @Test
     public void test() {
         Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
-        parameterMap.put("textId", "SINA_福建_derby_1");
-        parameterMap.put("source", "SINA");
-        String result = this.testHandler.execute(ActionNames.PARSE_SEARCH_TEXT, parameterMap);
+        parameterMap.put("pageIndex", "2");
+        parameterMap.put("pageSize", "15");
+        parameterMap.put("tag", "java");
+        String result = this.testHandler.execute(ActionNames.INQUIRE_EMPLOYEE, parameterMap);
         System.out.println(result);
     }
 }

@@ -30,7 +30,7 @@ public class SpiderInfoTaskImpl implements Task {
     
     @Override
     public void doWhenRejected() {
-        this.taskLocalService.updateExceptionTask(this.taskEntity.getTaskId());
+        this.taskLocalService.updateSpiderExceptionTask(this.taskEntity.getTaskId());
     }
     
     @Override
@@ -68,6 +68,10 @@ public class SpiderInfoTaskImpl implements Task {
             }
         } catch (IOException e) {
         }
-        this.taskLocalService.updateParseTask(this.taskEntity.getTaskId(), textIdList);
+        if(textIdList.isEmpty()) {
+            this.taskLocalService.updateSpiderExceptionTask(this.taskEntity.getTaskId());
+        } else {
+            this.taskLocalService.updateParseTask(this.taskEntity.getTaskId(), textIdList);
+        }
     }
 }

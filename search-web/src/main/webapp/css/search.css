@@ -165,7 +165,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 
 .search_task_list {
     margin: 2px 0 0 0;
-    max-height: 95%;
+    height: 90%;
 }
 
 .search_task_list .yy_list_item {
@@ -189,7 +189,38 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     margin: 0 80px;
 }
 
+/*-------------------------------------------------search-employee---------------------------------------*/
+.search_employee {
+    width: 800px;
+    height: 600px;
+}
 
+.inquire_employee_form input, .inquire_employee_form div {
+    display: inline-block;
+}
+
+.search_employee_list {
+    margin: 2px 0 0 0;
+    height: 90%;
+}
+
+.search_employee_list .yy_list_item {
+    border-bottom: 1px solid gainsboro;
+}
+
+.search_employee_list .yy_list_item .employee_info div {
+    display: inline-block;
+    font-size: 12px;
+    height: 12px;
+    width: 120px;
+    padding: 6px 10px;
+}
+
+.search_employee_list .yy_list_item .employee_tag {
+    font-size: 12px;
+    height: 12px;
+    padding: 6px 10px;
+}
 
 
 

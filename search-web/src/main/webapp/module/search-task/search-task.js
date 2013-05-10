@@ -21,15 +21,23 @@ $.yyLoadListener('search-task', {
                         case 0:
                             state = '完成';
                             break;
+                        case 199:
+                            state = '爬虫异常';
+                            break;
+                        case 299:
+                            state = '解析异常';
+                            break;
                     }
                     var result = '<div class="task_tag">' + data.context.tag +'</div>' +
                         '<div class="task_location">' + data.context.location + '</div>' +
                         '<div class="task_source">' + data.source +'</div>' +
-                        '<div class="task_state">' + state + '</div>';
+                        '<div class="task_state">' + state + '</div>' +
+                        '<div class="task_lastUpdateTime">' + data.lastUpdateTime + '</div>';
                     return result;
                 }
             });
-            yy.sendMessage({act:'INQUIRE_SEARCH_TASK'});
+            searchTaskList.setPageSize(30);
+            yy.sendMessage({act:'INQUIRE_SEARCH_TASK',pageSize:searchTaskList.getPageSize()});
         }
     },
     eventListener:{
@@ -47,20 +55,33 @@ $.yyLoadListener('search-task', {
                     insertSearchTaskWindow.bounceIn();
                 }
             }
+        },
+        searchTaskListEventListener:{
+            scrollHalf:function (yy) {
+                var pageIndex = yy.getPageIndex();
+                if(yy.getPageNum() > pageIndex) {
+                    pageIndex++;
+                    yy.sendMessage({act:'INQUIRE_SEARCH_TASK',pageSize:yy.getPageSize(), pageIndex:pageIndex});
+                }
+            }
         }
     },
     messageListener:{
-        taskMessageListener:{
+        taskListMessageListener:{
             INQUIRE_SEARCH_TASK:function(yy, message) {
                 if (message.flag === 'SUCCESS') {
                     var searchTaskList = yy.findInModule('search-task-list');
+                    searchTaskList.setPageIndex(message.pageIndex);
+                    searchTaskList.setPageNum(message.pageNum);
+                    searchTaskList.setPageSize(message.pageSize);
+                    searchTaskList.setPageTotal(message.pageTotal);
                     searchTaskList.loadData(message.data);
                 }
             },
             INSERT_SEARCH_TASK:function(yy, message) {
                 if (message.flag === 'SUCCESS') {
                     var searchTaskList = yy.findInModule('search-task-list');
-                    searchTaskList.addItemData(message.data);
+                    searchTaskList.addItemDataFirst(message.data);
                 }
             }
         }

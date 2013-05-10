@@ -73,10 +73,14 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
      * @return
      */
     private String get(String url) {
+        try {
+            Thread.currentThread().sleep(1000);
+        } catch (InterruptedException ex) {
+        }
         SourceSessionEntity sourceSessionEntity = this.sourceSessionLocalService.getRandomSourceSession(this.sourceEnum);
         HttpGet httpGet = new HttpGet(url);
         httpGet.addHeader("Cookie", sourceSessionEntity.getCookie());
-        String response = HttpClientManager.execute(httpGet);
+        String response = HttpClientManager.MANAGER.execute(httpGet);
         return response;
     }
 

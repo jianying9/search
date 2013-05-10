@@ -4,6 +4,7 @@ import com.search.config.ActionNames;
 import com.search.entity.EmployeeEntity;
 import com.search.localservice.EmployeeLocalService;
 import com.search.localservice.TaskLocalService;
+import com.search.task.InsertUpdateTaskTaskImpl;
 import com.wolf.framework.dao.InquireResult;
 import com.wolf.framework.dao.condition.Condition;
 import com.wolf.framework.dao.condition.InquireContext;
@@ -14,6 +15,9 @@ import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.service.ParameterTypeEnum;
 import com.wolf.framework.service.Service;
 import com.wolf.framework.service.ServiceConfig;
+import com.wolf.framework.task.InjectTaskExecutor;
+import com.wolf.framework.task.Task;
+import com.wolf.framework.task.TaskExecutor;
 import com.wolf.framework.worker.context.MessageContext;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +43,10 @@ public class InsertUpdateTaskServiceImpl implements Service {
     //
     @InjectLocalService()
     private TaskLocalService taskLocalService;
+    
+    //
+    @InjectTaskExecutor
+    private TaskExecutor taskExecutor;
 
     @Override
     public void execute(MessageContext messageContext) {
@@ -71,12 +79,13 @@ public class InsertUpdateTaskServiceImpl implements Service {
                 sourceIdList.add(sourceId);
             }
             //创建任务
+            Task task;
             Set<Map.Entry<String, List<String>>> entrySet = sourceMap.entrySet();
             for (Map.Entry<String, List<String>> entry : entrySet) {
                 source = entry.getKey();
                 sourceIdList = entry.getValue();
-                this.taskLocalService.insertInfoTask(source, sourceIdList);
-                this.taskLocalService.insertFollowTask(source, sourceIdList);
+                task = new InsertUpdateTaskTaskImpl(this.taskLocalService, source, sourceIdList);
+                this.taskExecutor.submet(task);
             }
             messageContext.success();
         }

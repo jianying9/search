@@ -8,6 +8,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.slf4j.Logger;
 
 /**
@@ -15,14 +16,22 @@ import org.slf4j.Logger;
  * @author aladdin
  */
 public class HttpClientManager {
+    
+    public final static HttpClientManager MANAGER = new HttpClientManager();
+    
+    private final DefaultHttpClient httpClient;
 
-    private final static DefaultHttpClient httpClient = new DefaultHttpClient();
+    public HttpClientManager() {
+        PoolingClientConnectionManager cm = new PoolingClientConnectionManager();
+        cm.setMaxTotal(100);
+        this.httpClient = new DefaultHttpClient(cm);
+    }
 
-    public static String execute(HttpGet httpGet) {
+    public String execute(HttpGet httpGet) {
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
         String responseBody = "";
         try {
-            responseBody = httpClient.execute(httpGet, responseHandler);
+            responseBody = this.httpClient.execute(httpGet, responseHandler);
         } catch (IOException ex) {
             Logger logger = LogFactory.getLogger(SpiderLoggerEnum.HTTP_CLIENT);
             logger.error("httpClient get error!", ex);
@@ -30,11 +39,11 @@ public class HttpClientManager {
         return responseBody;
     }
     
-    public static String execute(HttpPost httpPost) {
+    public String execute(HttpPost httpPost) {
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
         String responseBody = "";
         try {
-            responseBody = httpClient.execute(httpPost, responseHandler);
+            responseBody = this.httpClient.execute(httpPost, responseHandler);
         } catch (IOException ex) {
             Logger logger = LogFactory.getLogger(SpiderLoggerEnum.HTTP_CLIENT);
             logger.error("httpClient post error!", ex);

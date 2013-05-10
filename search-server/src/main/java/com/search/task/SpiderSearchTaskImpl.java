@@ -30,7 +30,7 @@ public class SpiderSearchTaskImpl implements Task {
 
     @Override
     public void doWhenRejected() {
-        this.taskLocalService.updateExceptionTask(this.taskEntity.getTaskId());
+        this.taskLocalService.updateSpiderExceptionTask(this.taskEntity.getTaskId());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class SpiderSearchTaskImpl implements Task {
             }
             this.taskLocalService.updateParseTask(this.taskEntity.getTaskId(), textIdList);
         } else {
-            this.taskLocalService.updateExceptionTask(this.taskEntity.getTaskId());
+            this.taskLocalService.updateSpiderExceptionTask(this.taskEntity.getTaskId());
         }
     }
 }

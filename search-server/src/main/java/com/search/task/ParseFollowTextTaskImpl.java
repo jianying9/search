@@ -34,7 +34,7 @@ public class ParseFollowTextTaskImpl implements Task {
 
     @Override
     public void doWhenRejected() {
-        this.taskLocalService.updateExceptionTask(this.taskEntity.getTaskId());
+        this.taskLocalService.updateParseExceptionTask(this.taskEntity.getTaskId());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ParseFollowTextTaskImpl implements Task {
                     while (sourceIdNodeIterator.hasNext()) {
                         sourceIdNode = sourceIdNodeIterator.next();
                         sourceId = sourceIdNode.getTextValue();
-                        if(sourceIdList.contains(sourceId) == false) {
+                        if (sourceIdList.contains(sourceId) == false) {
                             sourceIdList.add(sourceId);
                         }
                     }
@@ -82,7 +82,11 @@ public class ParseFollowTextTaskImpl implements Task {
             }
         } catch (IOException e) {
         }
-        this.employeeLocalService.batchInsertEmployee(source, sourceIdList);
-        this.taskLocalService.updateFinishedTask(this.taskEntity.getTaskId());
+        if (sourceIdList.isEmpty()) {
+            this.taskLocalService.updateParseExceptionTask(this.taskEntity.getTaskId());
+        } else {
+            this.employeeLocalService.batchInsertEmployee(source, sourceIdList);
+            this.taskLocalService.updateFinishedTask(this.taskEntity.getTaskId());
+        }
     }
 }

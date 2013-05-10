@@ -17,4 +17,6 @@ public class ActionNames {
     public final static String EXECUTE_SPIDER_TASK = "EXECUTE_SPIDER_TASK";
     //执行解析任务
     public final static String EXECUTE_PARSE_TASK = "EXECUTE_PARSE_TASK";
+    //人员搜索
+    public final static String INQUIRE_EMPLOYEE = "INQUIRE_EMPLOYEE";
 }
