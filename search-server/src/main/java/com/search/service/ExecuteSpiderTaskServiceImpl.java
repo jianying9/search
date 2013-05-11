@@ -6,7 +6,6 @@ import com.search.localservice.TaskLocalService;
 import com.search.task.SpiderFollowTaskImpl;
 import com.search.task.SpiderInfoTaskImpl;
 import com.search.task.SpiderSearchTaskImpl;
-import com.wolf.framework.dao.InquireResult;
 import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.service.ParameterTypeEnum;
 import com.wolf.framework.service.Service;
@@ -38,12 +37,11 @@ public class ExecuteSpiderTaskServiceImpl implements Service {
 
     @Override
     public void execute(MessageContext messageContext) {
-        InquireResult<TaskEntity> inquireResult = this.taskLocalService.inquireSpiderTask(messageContext.getPageIndex(), messageContext.getPageSize());
-        if (inquireResult.isEmpty() == false) {
-            List<TaskEntity> taskEntityList = inquireResult.getResultList();
+        List<TaskEntity> taskEntityList = this.taskLocalService.inquireSpiderTask();
+        if (taskEntityList.isEmpty() == false) {
             Task task;
             for (TaskEntity taskEntity : taskEntityList) {
-                switch(taskEntity.getType()) {
+                switch (taskEntity.getType()) {
                     case TaskLocalService.TYPE_SEARCH:
                         task = new SpiderSearchTaskImpl(this.taskLocalService, taskEntity);
                         break;

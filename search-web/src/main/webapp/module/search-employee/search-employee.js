@@ -35,7 +35,7 @@ $.yyLoadListener('search-employee', {
             }
         },
         searchEmployeeListEventListener:{
-            scrollHalf:function (yy) {
+            scrollBottom:function (yy) {
                 var pageIndex = yy.getPageIndex();
                 if (yy.getPageNum() > pageIndex) {
                     pageIndex++;

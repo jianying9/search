@@ -275,7 +275,7 @@ $.yyLoadPlugin({
                             this.extend.scroll.initScroll(clientHeight, scrollHeight);
                         } else {
                             this.extend.hasScroll = false;
-                            this.extend.scroll.$this.css({height: 0});
+                            this.extend.scroll.$this.css({height:0});
                         }
                     };
                     yy._scrollBottom = function () {
@@ -302,30 +302,32 @@ $.yyLoadPlugin({
                         type:'mousewheel',
                         handler:function (yy, event, delta, deltaX, deltaY) {
                             if (yy.extend.hasScroll = true) {
-                                var speed = 50;
                                 var scroll = yy.extend.scroll;
                                 var $this = yy.$this;
                                 var scrollHeight = $this[0].scrollHeight;
                                 var clientHeight = $this[0].clientHeight;
                                 var top = $this.scrollTop();
-                                if (delta > 0) {
-                                    speed = -speed;
-                                }
-                                var newTop = top + speed;
-                                //触发滚动事件
-                                if (newTop * 2 >= (scrollHeight - clientHeight)) {
-                                    if (yy.eventListener && yy.eventListener.scrollHalf) {
-                                        yy.eventListener.scrollHalf(yy);
+                                if (top < scrollHeight - clientHeight) {
+                                    var speed = 50;
+                                    if (delta > 0) {
+                                        speed = -speed;
                                     }
+                                    var newTop = top + speed;
+                                    //触发滚动事件
+                                    if (newTop >= scrollHeight - clientHeight) {
+                                        if (yy.eventListener && yy.eventListener.scrollBottom) {
+                                            yy.eventListener.scrollBottom(yy);
+                                        }
+                                    }
+                                    if (newTop > scrollHeight - clientHeight) {
+                                        newTop = scrollHeight - clientHeight;
+                                    }
+                                    if (newTop < 0) {
+                                        newTop = 0;
+                                    }
+                                    scroll.scrollTop(newTop);
+                                    $this.scrollTop(newTop);
                                 }
-                                if (newTop > scrollHeight - clientHeight) {
-                                    newTop = scrollHeight - clientHeight;
-                                }
-                                if (newTop < 0) {
-                                    newTop = 0;
-                                }
-                                scroll.scrollTop(newTop);
-                                $this.scrollTop(newTop);
                             }
                         }
                     });
@@ -345,28 +347,28 @@ $.yyLoadPlugin({
                         throw 'Un init list method dataToHtml!id:' + this.id;
                     }
                 };
-                yy.getPageIndex = function() {
+                yy.getPageIndex = function () {
                     return this.extend.pageIndex;
                 };
-                yy.setPageIndex = function(pageIndex) {
+                yy.setPageIndex = function (pageIndex) {
                     this.extend.pageIndex = pageIndex;
                 };
-                yy.getPageSize = function() {
+                yy.getPageSize = function () {
                     return this.extend.pageSize;
                 };
-                yy.setPageSize = function(pageSize) {
+                yy.setPageSize = function (pageSize) {
                     this.extend.pageSize = pageSize;
                 };
-                yy.getPageNum = function() {
+                yy.getPageNum = function () {
                     return this.extend.pageNum;
                 };
-                yy.setPageNum = function(pageNum) {
+                yy.setPageNum = function (pageNum) {
                     this.extend.pageNum = pageNum;
                 };
-                yy.getPageTotal = function() {
+                yy.getPageTotal = function () {
                     return this.extend.pageTotal;
                 };
-                yy.setPageTotal = function(pageTotal) {
+                yy.setPageTotal = function (pageTotal) {
                     this.extend.pageTotal = pageTotal;
                 };
                 yy.init = function (config) {

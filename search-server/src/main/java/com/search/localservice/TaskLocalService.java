@@ -44,9 +44,9 @@ public interface TaskLocalService extends Local{
     
     public JsonNode parseContext(String context);
     
-    public InquireResult<TaskEntity> inquireSpiderTask(int pageIndex, int pageSize);
+    public List<TaskEntity> inquireSpiderTask();
     
-    public InquireResult<TaskEntity> inquireParseTask(int pageIndex, int pageSize);
+    public List<TaskEntity> inquireParseTask();
     
     public InquireResult<TaskEntity> inquireSearchTask(int pageIndex, int pageSize);
 }

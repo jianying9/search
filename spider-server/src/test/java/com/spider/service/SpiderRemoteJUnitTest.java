@@ -1,6 +1,6 @@
-package com.search.service;
+package com.spider.service;
 
-import com.search.config.ActionNames;
+import com.spider.config.ActionNames;
 import com.wolf.framework.remote.FrameworkSessionBeanRemote;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author aladdin
  */
-public class RemoteJUnitTest {
+public class SpiderRemoteJUnitTest {
 
-    public RemoteJUnitTest() {
+    public SpiderRemoteJUnitTest() {
     }
 
     @BeforeClass
@@ -45,7 +45,7 @@ public class RemoteJUnitTest {
         props.setProperty("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
         props.setProperty("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
         props.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.19.219");
-        props.setProperty("org.omg.CORBA.ORBInitialPort", "5837");
+        props.setProperty("org.omg.CORBA.ORBInitialPort", "6837");
         FrameworkSessionBeanRemote remote;
         try {
             InitialContext ic = new InitialContext(props);
@@ -62,10 +62,8 @@ public class RemoteJUnitTest {
     @Test
     public void testRemoteExecuteSpiderTask() {
         Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        parameterMap.put("pageIndex", "1");
-        parameterMap.put("pageSize", "40");
         FrameworkSessionBeanRemote remote = this.getRemote();
-        String result = remote.execute(ActionNames.EXECUTE_PARSE_TASK, parameterMap);
+        String result = remote.execute(ActionNames.UPDATE_ALL_SOURCE_SESSION, parameterMap);
         System.out.println(result);
     }
 }

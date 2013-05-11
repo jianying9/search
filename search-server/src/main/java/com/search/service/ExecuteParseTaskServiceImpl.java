@@ -7,7 +7,6 @@ import com.search.localservice.TaskLocalService;
 import com.search.task.ParseFollowTextTaskImpl;
 import com.search.task.ParseInfoTextTaskImpl;
 import com.search.task.ParseSearchTextTaskImpl;
-import com.wolf.framework.dao.InquireResult;
 import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.service.ParameterTypeEnum;
 import com.wolf.framework.service.Service;
@@ -25,12 +24,11 @@ import java.util.List;
 @ServiceConfig(
         actionName = ActionNames.EXECUTE_PARSE_TASK,
 parameterTypeEnum = ParameterTypeEnum.NO_PARAMETER,
-page = true,
 validateSession = false,
 response = true,
 description = "执行解析任务")
 public class ExecuteParseTaskServiceImpl implements Service {
-    
+
     @InjectLocalService()
     private EmployeeLocalService employeeLocalService;
     //
@@ -42,12 +40,11 @@ public class ExecuteParseTaskServiceImpl implements Service {
 
     @Override
     public void execute(MessageContext messageContext) {
-        InquireResult<TaskEntity> inquireResult = this.taskLocalService.inquireParseTask(messageContext.getPageIndex(), messageContext.getPageSize());
-        if (inquireResult.isEmpty() == false) {
-            List<TaskEntity> taskEntityList = inquireResult.getResultList();
+        List<TaskEntity> taskEntityList = this.taskLocalService.inquireParseTask();
+        if (taskEntityList.isEmpty() == false) {
             Task task;
             for (TaskEntity taskEntity : taskEntityList) {
-                switch(taskEntity.getType()) {
+                switch (taskEntity.getType()) {
                     case TaskLocalService.TYPE_SEARCH:
                         task = new ParseSearchTextTaskImpl(this.taskLocalService, this.employeeLocalService, taskEntity);
                         break;

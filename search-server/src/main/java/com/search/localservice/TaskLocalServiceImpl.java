@@ -123,7 +123,7 @@ public class TaskLocalServiceImpl implements TaskLocalService {
         updateMap.put("state", Integer.toString(TaskLocalService.STATE_FINISHED));
         this.taskEntityDao.update(updateMap);
     }
-    
+
     @Override
     public void updateSpiderExceptionTask(String taskId) {
         Map<String, String> updateMap = new HashMap<String, String>(2, 1);
@@ -146,25 +146,21 @@ public class TaskLocalServiceImpl implements TaskLocalService {
     }
 
     @Override
-    public InquireResult<TaskEntity> inquireSpiderTask(int pageIndex, int pageSize) {
+    public List<TaskEntity> inquireSpiderTask() {
         InquireContext inquireContext = new InquireContext();
-        inquireContext.setPageIndex(pageIndex);
-        inquireContext.setPageSize(pageSize);
         Condition condition = new Condition("state", OperateTypeEnum.EQUAL, Integer.toString(TaskLocalService.STATE_SPIDER));
         inquireContext.addCondition(condition);
-        InquireResult<TaskEntity> inquireResult = this.taskEntityDao.inquirePageByCondition(inquireContext);
-        return inquireResult;
+        List<TaskEntity> taskEntityList = this.taskEntityDao.inquireByCondition(inquireContext);
+        return taskEntityList;
     }
 
     @Override
-    public InquireResult<TaskEntity> inquireParseTask(int pageIndex, int pageSize) {
+    public List<TaskEntity> inquireParseTask() {
         InquireContext inquireContext = new InquireContext();
-        inquireContext.setPageIndex(pageIndex);
-        inquireContext.setPageSize(pageSize);
         Condition condition = new Condition("state", OperateTypeEnum.EQUAL, Integer.toString(TaskLocalService.STATE_PARSE));
         inquireContext.addCondition(condition);
-        InquireResult<TaskEntity> inquireResult = this.taskEntityDao.inquirePageByCondition(inquireContext);
-        return inquireResult;
+        List<TaskEntity> taskEntityList = this.taskEntityDao.inquireByCondition(inquireContext);
+        return taskEntityList;
     }
 
     @Override

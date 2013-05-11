@@ -23,57 +23,23 @@ public class SearchTimerSessionBean extends AbstractTimer implements SearchTimer
 
     private Logger logger = LogFactory.getLogger(SearchLoggerEnum.TIMER);
 
-    @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "22", dayOfWeek = "*", persistent = false)
+    @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "20", dayOfWeek = "*", persistent = false)
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public void executeSpiderTask() {
         this.logger.info("timer:EXECUTE_SPIDER_TASK------start");
-        long start = System.currentTimeMillis();
-        long end = start + 36000000;
-        int pageIndex = 1;
-        int pageSize = 10;
-        String result;
         Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        while (start < end) {
-            this.logger.info("timer:EXECUTE_SPIDER_TASK------{}", start);
-            parameterMap.put("pageIndex", Integer.toString(pageIndex));
-            parameterMap.put("pageSize", Integer.toString(pageSize));
-            result = this.executeService(ActionNames.EXECUTE_SPIDER_TASK, parameterMap);
-            if (result.indexOf("SUCCESS") > -1) {
-                pageIndex++;
-                start = System.currentTimeMillis();
-            } else {
-                //结束任务
-                start = end;
-            }
-        }
+        this.executeService(ActionNames.EXECUTE_SPIDER_TASK, parameterMap);
         this.logger.info("timer:EXECUTE_SPIDER_TASK------finished");
     }
 
-    @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "9", dayOfWeek = "*", persistent = false)
+    @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "6", dayOfWeek = "*", persistent = false)
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public void executeParseTask() {
         this.logger.info("timer:EXECUTE_PARSE_TASK------start");
-        long start = System.currentTimeMillis();
-        long end = start + 36000000;
-        int pageIndex = 1;
-        int pageSize = 10;
-        String result;
         Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        while (start < end) {
-            this.logger.info("timer:EXECUTE_PARSE_TASK------{}", start);
-            parameterMap.put("pageIndex", Integer.toString(pageIndex));
-            parameterMap.put("pageSize", Integer.toString(pageSize));
-            result = this.executeService(ActionNames.EXECUTE_PARSE_TASK, parameterMap);
-            if (result.indexOf("SUCCESS") > -1) {
-                pageIndex++;
-                start = System.currentTimeMillis();
-            } else {
-                //结束任务
-                start = end;
-            }
-        }
+        this.executeService(ActionNames.EXECUTE_PARSE_TASK, parameterMap);
         this.logger.info("timer:EXECUTE_PARSE_TASK------finished");
     }
 

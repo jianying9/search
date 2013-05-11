@@ -2,37 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6fd1f47-f764-4b65-94b6-50172ccf35e9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/service/InquireEmployeeServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/InsertUpdateTaskTaskImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../search-server/src/test/java/com/search/service/InquireEmployeeServiceImplJUnitTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/search-employee/search-employee.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/search-employee/search-employee.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/config/ActionNames.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/config/ActionNames.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/localservice/TaskLocalService.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/localservice/TaskLocalService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/localservice/TaskLocalServiceImpl.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/localservice/TaskLocalServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/service/InsertUpdateTaskServiceImpl.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/service/InsertUpdateTaskServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/ParseFollowTextTaskImpl.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/ParseFollowTextTaskImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/ParseInfoTextTaskImpl.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/ParseInfoTextTaskImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/ParseSearchTextTaskImpl.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/ParseSearchTextTaskImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/SpiderFollowTaskImpl.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/SpiderFollowTaskImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/SpiderInfoTaskImpl.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/SpiderInfoTaskImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/SpiderSearchTaskImpl.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/task/SpiderSearchTaskImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../search-server/src/test/java/com/search/service/SearchRemoteJUnitTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../../search-server/src/test/java/com/search/service/RemoteJUnitTest.java" afterPath="$PROJECT_DIR$/../../../../spider-server/src/test/java/com/spider/service/SpiderRemoteJUnitTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/timer/SearchTimerSessionBean.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/timer/SearchTimerSessionBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/timer/SearchTimerSessionBeanLocal.java" afterPath="$PROJECT_DIR$/../../../../search-server/src/main/java/com/search/timer/SearchTimerSessionBeanLocal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../spider-server/src/main/java/com/spider/httpclient/HttpClientManager.java" afterPath="$PROJECT_DIR$/../../../../spider-server/src/main/java/com/spider/httpclient/HttpClientManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../spider-server/src/main/java/com/spider/localservice/SinaSourceLocalServiceImpl.java" afterPath="$PROJECT_DIR$/../../../../spider-server/src/main/java/com/spider/localservice/SinaSourceLocalServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../spider-server/src/main/java/com/spider/localservice/SourceSessionLocalServiceImpl.java" afterPath="$PROJECT_DIR$/../../../../spider-server/src/main/java/com/spider/localservice/SourceSessionLocalServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../spider-server/src/test/java/com/spider/service/GetSearchTextServiceImplJUnitTest.java" afterPath="$PROJECT_DIR$/../../../../spider-server/src/test/java/com/spider/service/GetSearchTextServiceImplJUnitTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../spider-server/src/test/java/com/spider/service/InsertSourceSessionServiceImplJUnitTest.java" afterPath="$PROJECT_DIR$/../../../../spider-server/src/test/java/com/spider/service/InsertSourceSessionServiceImplJUnitTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../spider-server/src/test/java/com/spider/service/ParseSearchTextServiceImplJUnitTest.java" afterPath="$PROJECT_DIR$/../../../../spider-server/src/test/java/com/spider/service/ParseSearchTextServiceImplJUnitTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../search-server/pom.xml" afterPath="$PROJECT_DIR$/../../../../search-server/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/search.css" afterPath="$PROJECT_DIR$/css/search.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/scripts/yy-module.js" afterPath="$PROJECT_DIR$/libs/scripts/yy-module.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/search-main/search-main.html" afterPath="$PROJECT_DIR$/module/search-main/search-main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/search-main/search-main.js" afterPath="$PROJECT_DIR$/module/search-main/search-main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/search-task/search-task.html" afterPath="$PROJECT_DIR$/module/search-task/search-task.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/search-task/search-task.js" afterPath="$PROJECT_DIR$/module/search-task/search-task.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/search-employee/search-employee.js" afterPath="$PROJECT_DIR$/module/search-employee/search-employee.js" />
     </list>
     <ignored path="webapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,7 +50,7 @@
       <file leaf-file-name="yy-module.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/scripts/yy-module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="277" column="43" selection-start="11073" selection-end="11144" vertical-scroll-proportion="0.0">
+            <state line="311" column="52" selection-start="12917" selection-end="12917" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -108,10 +83,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search-employee.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="search-employee.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/module/search-employee/search-employee.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="48" selection-start="674" selection-end="674" vertical-scroll-proportion="0.0">
+            <state line="37" column="40" selection-start="1512" selection-end="1512" vertical-scroll-proportion="0.42471042">
               <folding />
             </state>
           </provider>
@@ -126,10 +101,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search-task.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="search-task.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/module/search-task/search-task.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="34" selection-start="968" selection-end="968" vertical-scroll-proportion="0.53984576">
+            <state line="38" column="43" selection-start="1527" selection-end="1527" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -167,18 +142,17 @@
         <option value="$PROJECT_DIR$/module/search-task/search-task.html" />
         <option value="$PROJECT_DIR$/module/search-main/search-main.js" />
         <option value="$PROJECT_DIR$/module/search-employee/search-employee.html" />
-        <option value="$PROJECT_DIR$/libs/scripts/yy-module.js" />
-        <option value="$PROJECT_DIR$/module/search-employee/search-employee.js" />
         <option value="$PROJECT_DIR$/css/search.css" />
         <option value="$PROJECT_DIR$/module/search-task/search-task.js" />
+        <option value="$PROJECT_DIR$/libs/scripts/yy-module.js" />
+        <option value="$PROJECT_DIR$/module/search-employee/search-employee.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
     <option name="y" value="24" />
-    <option name="width" value="1296" />
-    <option name="height" value="984" />
+    <option name="width" value="1294" />
+    <option name="height" value="983" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -206,6 +180,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -366,24 +350,14 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -432,13 +406,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="24" width="1296" height="984" extended-state="6" />
+    <frame x="0" y="24" width="1294" height="983" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14319809" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14262949" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -546,14 +520,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/module/search-task-insert/search-task-insert.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="4" selection-start="194" selection-end="705" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/scripts/yy-module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="43" selection-start="11073" selection-end="11144" vertical-scroll-proportion="0.0" />
+        <state line="2" column="4" selection-start="194" selection-end="705" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/search-main/search-main.html">
@@ -568,9 +535,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/module/search-employee/search-employee.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="6" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="9" column="6" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/search-task-insert/search-task-insert.js">
@@ -580,21 +545,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/search.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="188" column="19" selection-start="3088" selection-end="3088" vertical-scroll-proportion="0.0">
+        <state line="188" column="19" selection-start="3088" selection-end="3088" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/search-task/search-task.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="43" selection-start="1527" selection-end="1527" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/scripts/yy-module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="311" column="52" selection-start="12917" selection-end="12917" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/module/search-employee/search-employee.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="48" selection-start="674" selection-end="674" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/search-task/search-task.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="34" selection-start="968" selection-end="968" vertical-scroll-proportion="0.53984576">
+        <state line="37" column="40" selection-start="1512" selection-end="1512" vertical-scroll-proportion="0.42471042">
           <folding />
         </state>
       </provider>
