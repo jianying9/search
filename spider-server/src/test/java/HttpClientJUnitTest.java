@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.http.Consts;
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.ClientPNames;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -49,6 +52,7 @@ public class HttpClientJUnitTest {
     public void searchTest() throws IOException {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet("http://s.weibo.com/weibo/java");
+        httpGet.addHeader("Cookie", "SUE=es%3Db6adf12f4b8601f828eb340b2d5e11c4%26ev%3Dv1%26es2%3Db4163862a9a39cba9b0fb2a2491d75c3%26rs0%3D0OZbE%252BPuRXl1I%252B5LkwYv5%252B6o3DtTXqwzbJnPwPHnys2OAt1qjL8GLQraOs4BNL9HByDpOBlmUZ7zqiEbit5vKV%252FFvzqjVqivVcPdqp9H2OK64fHhLNGkkrZURJtS21d7gt2eANxvtKdMRPBCbLPaLrkTxwlqvD7snhZxhJdn6t4%253D%26rv%3D0; Apache=6004235453438.014.1368444546265; SINAGLOBAL=6004235453438.014.1368444546265; ULV=1368444546278:1:1:1:6004235453438.014.1368444546265:; SUS=SID-3316242410-1368444556-JA-fqy84-4553ffd258b59453b1296f86d8f48cc3; wvr=5; SinaRot_wb_r_topic=59; ALF=1371036555; NSC_wjq_xfjcp.dpn_w3.6_w4=ffffffff0941013345525d5f4f58455e445a4a423660; un=hr10240001@163.com; NSC_JO5ux3qsdo02pureo32zvveomvcu4bn=ffffffff094111d845525d5f4f58455e445a4a423660; SUP=cv%3D1%26bt%3D1368444555%26et%3D1368530955%26d%3Dc909%26i%3Df297%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D0%26st%3D0%26uid%3D3316242410%26user%3Dhr10240001%2540163.com%26ag%3D4%26name%3Dhr10240001%2540163.com%26nick%3Dhr0001%26fmp%3D%26lcp%3D; SSOLoginState=1368444556; _s_tentry=-; ");
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
         String responseBody = httpclient.execute(httpGet, responseHandler);
         int index = responseBody.lastIndexOf("pl_weibo_feedlist");
@@ -61,6 +65,24 @@ public class HttpClientJUnitTest {
         while (matcher.find()) {
             System.out.println(matcher.group(1));
         }
+    }
+
+    @Test
+    public void followTest() throws IOException {
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        List<Header> headerList = new ArrayList<Header>(10);
+        Header header = new BasicHeader("Cookie", "SUE=es%3Db6adf12f4b8601f828eb340b2d5e11c4%26ev%3Dv1%26es2%3Db4163862a9a39cba9b0fb2a2491d75c3%26rs0%3D0OZbE%252BPuRXl1I%252B5LkwYv5%252B6o3DtTXqwzbJnPwPHnys2OAt1qjL8GLQraOs4BNL9HByDpOBlmUZ7zqiEbit5vKV%252FFvzqjVqivVcPdqp9H2OK64fHhLNGkkrZURJtS21d7gt2eANxvtKdMRPBCbLPaLrkTxwlqvD7snhZxhJdn6t4%253D%26rv%3D0; Apache=6004235453438.014.1368444546265; SINAGLOBAL=6004235453438.014.1368444546265; ULV=1368444546278:1:1:1:6004235453438.014.1368444546265:; SUS=SID-3316242410-1368444556-JA-fqy84-4553ffd258b59453b1296f86d8f48cc3; wvr=5; SinaRot_wb_r_topic=59; ALF=1371036555; NSC_wjq_xfjcp.dpn_w3.6_w4=ffffffff0941013345525d5f4f58455e445a4a423660; un=hr10240001@163.com; NSC_JO5ux3qsdo02pureo32zvveomvcu4bn=ffffffff094111d845525d5f4f58455e445a4a423660; SUP=cv%3D1%26bt%3D1368444555%26et%3D1368530955%26d%3Dc909%26i%3Df297%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D0%26st%3D0%26uid%3D3316242410%26user%3Dhr10240001%2540163.com%26ag%3D4%26name%3Dhr10240001%2540163.com%26nick%3Dhr0001%26fmp%3D%26lcp%3D; SSOLoginState=1368444556; _s_tentry=-; ");
+        headerList.add(header);
+        httpclient.getParams().setParameter(ClientPNames.DEFAULT_HEADERS, headerList);
+        httpclient.getCookieStore().clear();
+        HttpGet httpGet = new HttpGet("http://weibo.com/1768775252/follow?from=rel&wvr=5&loc=hisfollow");
+        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+        String responseBody = httpclient.execute(httpGet, responseHandler);
+        int index = responseBody.lastIndexOf("pl_relation_hisFollow");
+        responseBody = responseBody.substring(index);
+        index = responseBody.indexOf("</script>");
+        responseBody = responseBody.substring(0, index);
+        System.out.println(responseBody);
     }
 
 //     @Test
@@ -101,7 +123,7 @@ public class HttpClientJUnitTest {
         String responseBody = httpclient.execute(httpPost, responseHandler);
         System.out.println(responseBody);
     }
-    
+
 //    @Test
     public void filterTest() {
         String text = "{\"code\":\"100000\",\"msg\":\"\",\"data\":\"\t<div class=\"tab_normal clearfix\">\r\n \t\t";

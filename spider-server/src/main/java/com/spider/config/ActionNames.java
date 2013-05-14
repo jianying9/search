@@ -26,4 +26,5 @@ public class ActionNames {
     //
     public final static String CHECK_ALL_SOURCE_SESSION = "CHECK_ALL_SOURCE_SESSION";
     //
+    public final static String CHECK_SOURCE_SESSION = "CHECK_SOURCE_SESSION";
 }

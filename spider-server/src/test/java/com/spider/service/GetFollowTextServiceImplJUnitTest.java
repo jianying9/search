@@ -34,10 +34,17 @@ public class GetFollowTextServiceImplJUnitTest extends AbstractSpiderTest {
 
     @Test
     public void test() {
+        String[] ids = {"1921966584", "1691075164", "1880893944", "1693290333", "1433998744", "1747032341",
+                        "1734528463", "1743645552", "1977498755", "1298219897", "1943288981", "1677316385", 
+                        "1826480347", "1710155730", "1631244195", "1459617340", "1688484443", "1063357733", 
+                        "1075247944", "1725402307"};
+        String result;
         Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
-        parameterMap.put("sourceId", "1645596452");
         parameterMap.put("source", "SINA");
-        String result = this.testHandler.execute(ActionNames.GET_FOLLOW_TEXT, parameterMap);
-        System.out.println(result);
+        for (String id : ids) {
+            parameterMap.put("sourceId", id);
+            result = this.testHandler.execute(ActionNames.GET_FOLLOW_TEXT, parameterMap);
+            System.out.println(result);
+        }
     }
 }

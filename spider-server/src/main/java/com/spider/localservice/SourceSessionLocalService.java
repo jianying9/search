@@ -18,9 +18,13 @@ public interface SourceSessionLocalService extends Local{
     
     public void batchUpdateSourceSession(List<Map<String, String>> updateMapList);
     
-    public SourceSessionEntity getRandomSourceSession(SourceEnum sourceEnum);
-    
     public List<SourceSessionEntity> getAll();
     
+    public SourceSessionEntity inquireBySessionId(String sessionId);
+    
     public String[] parseSessionId(String sessionId);
+    
+    public Map<String, String> parseCookie(String cookies);
+    
+    public String createCookie(Map<String, String> cookieMap);
 }

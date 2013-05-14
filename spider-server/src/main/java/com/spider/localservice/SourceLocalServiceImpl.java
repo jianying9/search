@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -36,6 +35,10 @@ public class SourceLocalServiceImpl implements SourceLocalService {
                 sourceHandler = null;
         }
         return sourceHandler;
+    }
+    
+    @Override
+    public void init() {
     }
 
     @Override
@@ -74,27 +77,6 @@ public class SourceLocalServiceImpl implements SourceLocalService {
         return sourceHandler.parseFollowText(text);
     }
 
-    private Map<String, String> cookieToMap(String cookies) {
-        String[] cookieArr = cookies.split("; ");
-        Map<String, String> cookieMap = new HashMap<String, String>(cookieArr.length, 1);
-        String[] arr;
-        for (String cookie : cookieArr) {
-            arr = cookie.split("=");
-            cookieMap.put(arr[0], arr[1]);
-        }
-        return cookieMap;
-    }
-
-    private String mapToCookie(Map<String, String> cookieMap) {
-        StringBuilder cookieBuilder = new StringBuilder(512);
-        Set<Map.Entry<String, String>> entrySet = cookieMap.entrySet();
-        for (Map.Entry<String, String> entry : entrySet) {
-            cookieBuilder.append(entry.getKey()).append('=').append(entry.getValue()).append("; ");
-        }
-        String cookie = cookieBuilder.toString();
-        return cookie;
-    }
-
     @Override
     public void updateAllSourceSession() {
         //获取所有source session
@@ -102,32 +84,25 @@ public class SourceLocalServiceImpl implements SourceLocalService {
         if (sessionEntityList.isEmpty() == false) {
             SourceEnum sourceEnum;
             SourceHandler sourceHandler;
-            Map<String, String> updateMap;
             Map<String, String> newCookieMap;
             String cookie;
             String sessionId;
             String userName;
             String[] sessionIdInfo;
             String source;
-            List<Map<String, String>> updateMapList = new ArrayList<Map<String, String>>(sessionEntityList.size());
             //更新source session
             for (SourceSessionEntity sourceSessionEntity : sessionEntityList) {
-                sessionId = sourceSessionEntity.getSessionId();
-                sessionIdInfo = this.sourceSessionLocalService.parseSessionId(sessionId);
-                source = sessionIdInfo[0];
-                sourceEnum = SourceEnum.valueOf(source);
-                userName = sessionIdInfo[1];
-                sourceHandler = this.getSourceHandler(sourceEnum);
-                newCookieMap = sourceHandler.getLoginCookie(userName, "ljy1024");
-                cookie = this.mapToCookie(newCookieMap);
-                updateMap = new HashMap<String, String>(2, 1);
-                updateMap.put("sessionId", sessionId);
-                updateMap.put("cookie", cookie);
-                updateMapList.add(updateMap);
-            }
-            //保存source session
-            if (updateMapList.isEmpty() == false) {
-                this.sourceSessionLocalService.batchUpdateSourceSession(updateMapList);
+                if (sourceSessionEntity.getCookie().isEmpty()) {
+                    sessionId = sourceSessionEntity.getSessionId();
+                    sessionIdInfo = this.sourceSessionLocalService.parseSessionId(sessionId);
+                    source = sessionIdInfo[0];
+                    sourceEnum = SourceEnum.valueOf(source);
+                    userName = sessionIdInfo[1];
+                    sourceHandler = this.getSourceHandler(sourceEnum);
+                    newCookieMap = sourceHandler.getLoginCookie(userName, "ljy1024");
+                    cookie = this.sourceSessionLocalService.createCookie(newCookieMap);
+                    this.sourceSessionLocalService.updateSourceSession(sessionId, cookie);
+                }
             }
         }
     }
@@ -154,9 +129,9 @@ public class SourceLocalServiceImpl implements SourceLocalService {
                 source = sessionIdInfo[0];
                 sourceEnum = SourceEnum.valueOf(source);
                 sourceHandler = this.getSourceHandler(sourceEnum);
-                oldCookieMap = this.cookieToMap(sourceSessionEntity.getCookie());
+                oldCookieMap = this.sourceSessionLocalService.parseCookie(sourceSessionEntity.getCookie());
                 newCookieMap = sourceHandler.getNewCookie(oldCookieMap);
-                cookie = this.mapToCookie(newCookieMap);
+                cookie = this.sourceSessionLocalService.createCookie(newCookieMap);
                 updateMap = new HashMap<String, String>(2, 1);
                 updateMap.put("sessionId", sessionId);
                 updateMap.put("cookie", cookie);
@@ -168,13 +143,25 @@ public class SourceLocalServiceImpl implements SourceLocalService {
             }
         }
     }
+    
+    @Override
+    public void checkSourceSession(String sessionId) {
+        SourceSessionEntity sessionEntity = this.sourceSessionLocalService.inquireBySessionId(sessionId);
+        if(sessionEntity != null) {
+            String[] sessionIdInfo = this.sourceSessionLocalService.parseSessionId(sessionEntity.getSessionId());
+            SourceEnum sourceEnum = SourceEnum.valueOf(sessionIdInfo[0]);
+            Map<String, String> cookieMap = this.sourceSessionLocalService.parseCookie(sessionEntity.getCookie());
+            SourceHandler sourceHandler = this.getSourceHandler(sourceEnum);
+            sourceHandler.getNewCookie(cookieMap);
+        }
+    }
 
     @Override
     public void insertLoginSession(SourceEnum sourceEnum, String userName, String password) {
         SourceHandler sourceHandler = this.getSourceHandler(sourceEnum);
         Map<String, String> cookieMap = sourceHandler.getLoginCookie(userName, password);
         //保存cookie
-        String cookie = this.mapToCookie(cookieMap);
+        String cookie = this.sourceSessionLocalService.createCookie(cookieMap);
         this.sourceSessionLocalService.insertSourceSession(sourceEnum, userName, cookie);
     }
 }

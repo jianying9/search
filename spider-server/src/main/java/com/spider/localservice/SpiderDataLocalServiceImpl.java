@@ -26,6 +26,10 @@ public class SpiderDataLocalServiceImpl implements SpiderDataLocalService{
     
     @InjectHDao(clazz = HSpiderFollowEntity.class)
     private HEntityDao<HSpiderFollowEntity> hSpiderFollowEntityDao;
+    
+    @Override
+    public void init() {
+    }
 
     @Override
     public void insertSearchData(Map<String, String> entityMap) {

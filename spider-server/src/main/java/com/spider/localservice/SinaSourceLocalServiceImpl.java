@@ -1,8 +1,6 @@
 package com.spider.localservice;
 
 import com.spider.config.SourceEnum;
-import com.spider.entity.SourceSessionEntity;
-import com.spider.httpclient.HttpClientManager;
 import com.wolf.browser.BrowserProxySessionBeanRemote;
 import com.wolf.browser.BrowserProxySessionBeanRemoteFactory;
 import com.wolf.framework.local.InjectLocalService;
@@ -15,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.http.client.methods.HttpGet;
 
 /**
  *
@@ -50,7 +47,7 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
     private final String loginBtnXPath = "/html/body/div/div[2]/div[2]/div[2]/div/div[6]/a/span";
     //
     @InjectLocalService()
-    private SourceSessionLocalService sourceSessionLocalService;
+    private HttpClientLocalService httpClientLocalService;
 
     public SinaSourceLocalServiceImpl() {
         //
@@ -66,6 +63,10 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
         attrNameMap.put("真实姓名", "empName");
     }
 
+    @Override
+    public void init() {
+    }
+
     /**
      * get 请求
      *
@@ -73,14 +74,8 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
      * @return
      */
     private String get(String url) {
-        try {
-            Thread.currentThread().sleep(1000);
-        } catch (InterruptedException ex) {
-        }
-        SourceSessionEntity sourceSessionEntity = this.sourceSessionLocalService.getRandomSourceSession(this.sourceEnum);
-        HttpGet httpGet = new HttpGet(url);
-        httpGet.addHeader("Cookie", sourceSessionEntity.getCookie());
-        String response = HttpClientManager.MANAGER.execute(httpGet);
+        String response = this.httpClientLocalService.get(this.sourceEnum, url);
+        System.out.println(url);
         return response;
     }
 

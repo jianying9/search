@@ -11,6 +11,7 @@ import com.wolf.framework.local.LocalServiceConfig;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -23,7 +24,10 @@ public class SourceSessionLocalServiceImpl implements SourceSessionLocalService 
 
     @InjectDao(clazz = SourceSessionEntity.class)
     private EntityDao<SourceSessionEntity> sourceSessionEntityDao;
-    private int index = 0;
+
+    @Override
+    public void init() {
+    }
 
     @Override
     public void insertSourceSession(SourceEnum sourceEnum, String userName, String cookie) {
@@ -47,29 +51,6 @@ public class SourceSessionLocalServiceImpl implements SourceSessionLocalService 
     }
 
     @Override
-    public SourceSessionEntity getRandomSourceSession(SourceEnum sourceEnum) {
-        SourceSessionEntity sessionEntity;
-        String source = sourceEnum.name();
-        InquireContext inquireContext = new InquireContext();
-        Condition condition = new Condition("sessionId", OperateTypeEnum.LIKE, source);
-        inquireContext.addCondition(condition);
-        List<String> sessionIdList = this.sourceSessionEntityDao.inquireKeysByCondition(inquireContext);
-        if (sessionIdList.isEmpty()) {
-            throw new RuntimeException("SourceSessionLocalServiceImpl error:Can not find any session in source:".concat(sourceEnum.name()));
-        } else {
-            synchronized (this) {
-                if(this.index >= sessionIdList.size()) {
-                    this.index = 0;
-                }
-                String sessionId = sessionIdList.get(this.index);
-                sessionEntity = this.sourceSessionEntityDao.inquireByKey(sessionId);
-                this.index++;
-            }
-        }
-        return sessionEntity;
-    }
-
-    @Override
     public List<SourceSessionEntity> getAll() {
         InquireContext inquireContext = new InquireContext();
         Condition condition = new Condition("lastUpdateTime", OperateTypeEnum.GREATER, "0");
@@ -89,10 +70,38 @@ public class SourceSessionLocalServiceImpl implements SourceSessionLocalService 
 
     @Override
     public String[] parseSessionId(String sessionId) {
-        int index = sessionId.indexOf("_");
-        String source = sessionId.substring(0, index);
-        String userName = sessionId.substring(index + 1);
+        int num = sessionId.indexOf("_");
+        String source = sessionId.substring(0, num);
+        String userName = sessionId.substring(num + 1);
         String[] result = {source, userName};
         return result;
+    }
+
+    @Override
+    public Map<String, String> parseCookie(String cookies) {
+        String[] cookieArr = cookies.split("; ");
+        Map<String, String> cookieMap = new HashMap<String, String>(cookieArr.length, 1);
+        String[] arr;
+        for (String cookie : cookieArr) {
+            arr = cookie.split("=");
+            cookieMap.put(arr[0], arr[1]);
+        }
+        return cookieMap;
+    }
+
+    @Override
+    public String createCookie(Map<String, String> cookieMap) {
+        StringBuilder cookieBuilder = new StringBuilder(512);
+        Set<Map.Entry<String, String>> entrySet = cookieMap.entrySet();
+        for (Map.Entry<String, String> entry : entrySet) {
+            cookieBuilder.append(entry.getKey()).append('=').append(entry.getValue()).append("; ");
+        }
+        String cookie = cookieBuilder.toString();
+        return cookie;
+    }
+
+    @Override
+    public SourceSessionEntity inquireBySessionId(String sessionId) {
+        return this.sourceSessionEntityDao.inquireByKey(sessionId);
     }
 }

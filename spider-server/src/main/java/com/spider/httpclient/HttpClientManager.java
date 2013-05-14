@@ -1,53 +1,48 @@
 package com.spider.httpclient;
 
-import com.spider.config.SpiderLoggerEnum;
-import com.wolf.framework.logger.LogFactory;
-import java.io.IOException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.slf4j.Logger;
 
 /**
  *
  * @author aladdin
  */
 public class HttpClientManager {
-    
-    public final static HttpClientManager MANAGER = new HttpClientManager();
-    
-    private final DefaultHttpClient httpClient;
 
-    public HttpClientManager() {
-        PoolingClientConnectionManager cm = new PoolingClientConnectionManager();
-        cm.setMaxTotal(100);
-        this.httpClient = new DefaultHttpClient(cm);
+    private final List<DefaultHttpClient> clientList = new ArrayList<DefaultHttpClient>(20);
+    private int currentIndex = 0;
+    private final Map<DefaultHttpClient, Long> lastUseTimeMap = new HashMap<DefaultHttpClient, Long>(20, 1);
+
+    public void add(DefaultHttpClient client) {
+        this.clientList.add(client);
     }
 
-    public String execute(HttpGet httpGet) {
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        String responseBody = "";
-        try {
-            responseBody = this.httpClient.execute(httpGet, responseHandler);
-        } catch (IOException ex) {
-            Logger logger = LogFactory.getLogger(SpiderLoggerEnum.HTTP_CLIENT);
-            logger.error("httpClient get error!", ex);
+    public DefaultHttpClient getClient() {
+        DefaultHttpClient client;
+        Long lastTime;
+        long currentTime;
+        synchronized (this) {
+            client = this.clientList.get(this.currentIndex);
+            this.currentIndex++;
+            if (this.currentIndex >= this.clientList.size()) {
+                this.currentIndex = 0;
+            }
+            lastTime = this.lastUseTimeMap.get(client);
+            currentTime = System.currentTimeMillis();
+            if (lastTime == null) {
+                lastTime = currentTime;
+            }
+            this.lastUseTimeMap.put(client, currentTime);
         }
-        return responseBody;
-    }
-    
-    public String execute(HttpPost httpPost) {
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        String responseBody = "";
-        try {
-            responseBody = this.httpClient.execute(httpPost, responseHandler);
-        } catch (IOException ex) {
-            Logger logger = LogFactory.getLogger(SpiderLoggerEnum.HTTP_CLIENT);
-            logger.error("httpClient post error!", ex);
+        if (currentTime - lastTime < 2000) {
+            try {
+                Thread.currentThread().sleep(2000);
+            } catch (InterruptedException ex) {
+            }
         }
-        return responseBody;
+        return client;
     }
 }
