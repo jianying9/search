@@ -13,9 +13,9 @@ import org.junit.Test;
  *
  * @author aladdin
  */
-public class ExecuteParseTaskServiceImplJUnitTest extends AbstractSearchTest {
+public class TimerManageServiceImplJUnitTest extends AbstractSearchTest {
 
-    public ExecuteParseTaskServiceImplJUnitTest() {
+    public TimerManageServiceImplJUnitTest() {
     }
 
     @BeforeClass
@@ -33,10 +33,10 @@ public class ExecuteParseTaskServiceImplJUnitTest extends AbstractSearchTest {
 
     @Test
     public void test() {
-        Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
-        parameterMap.put("pageIndex", "1");
-        parameterMap.put("pageSize", "10");
-        String result = this.testHandler.execute(ActionNames.EXECUTE_PARSE_TASK, parameterMap);
+        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
+        parameterMap.put("timerState", "TIMER_UPDATE_EMPLOYEE_STATE");
+        parameterMap.put("option", "start");
+        String result = this.testHandler.execute(ActionNames.TIMER_MANAGE, parameterMap);
         System.out.println(result);
     }
 }

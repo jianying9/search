@@ -46,6 +46,7 @@ public class HttpClientLocalServiceImpl implements HttpClientLocalService {
         DefaultHttpClient httpClient;
         Header header;
         HttpClientManager httpClientManager;
+        this.clientManagerMap.clear();
         for (SourceSessionEntity sourceSessionEntity : sessionEntityList) {
             if (sourceSessionEntity.getCookie().isEmpty() == false) {
                 sessionIdInfo = this.sourceSessionLocalService.parseSessionId(sourceSessionEntity.getSessionId());

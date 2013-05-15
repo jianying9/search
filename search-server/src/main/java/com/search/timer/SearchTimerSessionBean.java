@@ -23,49 +23,18 @@ public class SearchTimerSessionBean extends AbstractTimer implements SearchTimer
 
     private Logger logger = LogFactory.getLogger(SearchLoggerEnum.TIMER);
 
-    @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "20", dayOfWeek = "*", persistent = false)
+    @Schedule(minute = "*", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*", persistent = false)
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
-    public void executeSpiderTask() {
-        this.logger.info("timer:EXECUTE_SPIDER_TASK------start");
-        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        this.executeService(ActionNames.EXECUTE_SPIDER_TASK, parameterMap);
-        this.logger.info("timer:EXECUTE_SPIDER_TASK------finished");
-    }
-
-    @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "6", dayOfWeek = "*", persistent = false)
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    @Override
-    public void executeParseTask() {
-        this.logger.info("timer:EXECUTE_PARSE_TASK------start");
-        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        this.executeService(ActionNames.EXECUTE_PARSE_TASK, parameterMap);
-        this.logger.info("timer:EXECUTE_PARSE_TASK------finished");
-    }
-
-    @Override
-    @Schedule(minute = "0", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "12", dayOfWeek = "*", persistent = false)
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public void autoInsertUpdateTask() {
-        this.logger.info("timer:INSERT_UPDATE_TASK------start");
-        int maxNum = 500000;
-        int num = 0;
-        int pageIndex = 1;
-        int pageSize = 40;
-        String result;
-        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        while (num < maxNum) {
-            this.logger.info("timer:INSERT_UPDATE_TASK------{}", num);
-            parameterMap.put("pageIndex", Integer.toString(pageIndex));
-            parameterMap.put("pageSize", Integer.toString(pageSize));
-            result = this.executeService(ActionNames.INSERT_UPDATE_TASK, parameterMap);
-            if (result.indexOf("SUCCESS") > -1) {
-                pageIndex++;
-            } else {
-                //结束任务
-                num = maxNum;
-            }
+    public void updateEmployee() {
+        this.logger.info("timer:TIMER_UPDATE_EMPLOYEE------start");
+        if (TimerState.TIMER_UPDATE_EMPLOYEE_STATE == TimerState.STATE_START) {
+            Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
+            String result = this.executeService(ActionNames.TIMER_UPDATE_EMPLOYEE, parameterMap);
+            System.out.println(result);
+        } else {
+            this.logger.info("timer:TIMER_UPDATE_EMPLOYEE------state -> stop");
         }
-        this.logger.info("timer:INSERT_UPDATE_TASK------finished");
+        this.logger.info("timer:TIMER_UPDATE_EMPLOYEE------finished");
     }
 }

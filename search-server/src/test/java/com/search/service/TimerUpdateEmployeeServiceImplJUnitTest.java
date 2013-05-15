@@ -13,9 +13,9 @@ import org.junit.Test;
  *
  * @author aladdin
  */
-public class InsertUpdateTaskServiceImplJUnitTest extends AbstractSearchTest {
+public class TimerUpdateEmployeeServiceImplJUnitTest extends AbstractSearchTest {
 
-    public InsertUpdateTaskServiceImplJUnitTest() {
+    public TimerUpdateEmployeeServiceImplJUnitTest() {
     }
 
     @BeforeClass
@@ -33,11 +33,8 @@ public class InsertUpdateTaskServiceImplJUnitTest extends AbstractSearchTest {
 
     @Test
     public void test() {
-        Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
-        parameterMap.put("pageIndex", "1");
-        parameterMap.put("pageSize", "50");
-        parameterMap.put("source", "SINA");
-        String result = this.testHandler.execute(ActionNames.INSERT_UPDATE_TASK, parameterMap);
+        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
+        String result = this.testHandler.execute(ActionNames.TIMER_UPDATE_EMPLOYEE, parameterMap);
         System.out.println(result);
     }
 }

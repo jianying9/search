@@ -17,9 +17,13 @@ public interface EmployeeLocalService extends Local {
     
     public int STATE_EXCEPTION = 1;
     
-    public void batchInsertSearchEmployee(String source, List<String> sourceIdList);
-
     public void batchInsertEmployee(String source, List<String> sourceIdList);
+    
+    public void insert(Map<String, String> insertMap);
+    
+    public void batchUpdateTime(List<String> empIdList);
+    
+    public void update(Map<String, String> updateMap);
 
     /**
      * 批量更新人员信息
@@ -40,4 +44,6 @@ public interface EmployeeLocalService extends Local {
     public String[] parseEmpId(String empId);
 
     public InquireResult<EmployeeEntity> inquireEmployee(InquireContext inquireContext);
+    
+    public EmployeeEntity inquireByEmpId(String empId);
 }

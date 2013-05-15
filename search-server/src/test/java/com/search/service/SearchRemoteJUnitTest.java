@@ -62,10 +62,8 @@ public class SearchRemoteJUnitTest {
     @Test
     public void testRemoteExecuteSpiderTask() {
         Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        parameterMap.put("pageIndex", "1");
-        parameterMap.put("pageSize", "5");
         FrameworkSessionBeanRemote remote = this.getRemote();
-        String result = remote.execute(ActionNames.EXECUTE_SPIDER_TASK, parameterMap);
+        String result = remote.execute(ActionNames.TIMER_UPDATE_EMPLOYEE, parameterMap);
         System.out.println(result);
     }
 }

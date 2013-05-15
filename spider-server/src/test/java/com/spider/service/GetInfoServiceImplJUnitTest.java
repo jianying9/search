@@ -14,9 +14,9 @@ import org.junit.Test;
  *
  * @author aladdin
  */
-public class ParseInfoTextServiceImplJUnitTest extends AbstractSpiderTest {
+public class GetInfoServiceImplJUnitTest extends AbstractSpiderTest {
 
-    public ParseInfoTextServiceImplJUnitTest() {
+    public GetInfoServiceImplJUnitTest() {
     }
 
     @BeforeClass
@@ -35,9 +35,9 @@ public class ParseInfoTextServiceImplJUnitTest extends AbstractSpiderTest {
     @Test
     public void test() {
         Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
-        parameterMap.put("textId", "SINA_1645596452");
+        parameterMap.put("sourceId", "1645596452");
         parameterMap.put("source", "SINA");
-        String result = this.testHandler.execute(ActionNames.PARSE_INFO_TEXT, parameterMap);
+        String result = this.testHandler.execute(ActionNames.GET_INFO, parameterMap);
         System.out.println(result);
     }
 }

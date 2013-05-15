@@ -22,32 +22,9 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
 
     @InjectDao(clazz = EmployeeEntity.class)
     private EntityDao<EmployeeEntity> employeeEntityDao;
-    
+
     @Override
-    public void batchInsertSearchEmployee(String source, List<String> sourceIdList) {
-        List<Map<String, String>> empMapList = new ArrayList<Map<String, String>>(500);
-        EmployeeEntity empEntity;
-        Map<String, String> empMap;
-        String empId;
-        for (String sourceId : sourceIdList) {
-            empId = this.createEmpId(source, sourceId);
-            empEntity = this.employeeEntityDao.inquireByKey(empId);
-            if (empEntity == null) {
-                empMap = new HashMap<String, String>(8, 1);
-                empMap.put("empId", empId);
-                empMap.put("gender", "");
-                empMap.put("nickName", "");
-                empMap.put("empName", "");
-                empMap.put("location", "");
-                empMap.put("tag", "");
-                empMap.put("lastUpdateTime", "1");
-                empMap.put("state", "0");
-                empMapList.add(empMap);
-            }
-        }
-        if (empMapList.isEmpty() == false) {
-            this.employeeEntityDao.batchInsert(empMapList);
-        }
+    public void init() {
     }
 
     @Override
@@ -67,7 +44,7 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
                 empMap.put("empName", "");
                 empMap.put("location", "");
                 empMap.put("tag", "");
-                empMap.put("lastUpdateTime", Long.toString(System.currentTimeMillis()));
+                empMap.put("lastUpdateTime", "1000");
                 empMap.put("state", "0");
                 empMapList.add(empMap);
             }
@@ -75,6 +52,33 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
         if (empMapList.isEmpty() == false) {
             this.employeeEntityDao.batchInsert(empMapList);
         }
+    }
+    
+    @Override
+    public void insert(Map<String, String> insertMap) {
+        insertMap.put("state", "0");
+        insertMap.put("lastUpdateTime", Long.toString(System.currentTimeMillis()));
+        this.employeeEntityDao.insert(insertMap);
+    }
+
+    @Override
+    public void batchUpdateTime(List<String> empIdList) {
+        List<Map<String, String>> empMapList = new ArrayList<Map<String, String>>(empIdList.size());
+        Map<String, String> empMap;
+        String lastUpdateTime = Long.toString(System.currentTimeMillis());
+        for (String empId : empIdList) {
+            empMap = new HashMap<String, String>(2, 1);
+            empMap.put("empId", empId);
+            empMap.put("lastUpdateTime", lastUpdateTime);
+            empMapList.add(empMap);
+        }
+        this.employeeEntityDao.batchUpdate(empMapList);
+    }
+
+    @Override
+    public void update(Map<String, String> updateMap) {
+        updateMap.put("lastUpdateTime", Long.toString(System.currentTimeMillis()));
+        this.employeeEntityDao.update(updateMap);
     }
 
     @Override
@@ -119,5 +123,10 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
     @Override
     public InquireResult<EmployeeEntity> inquireEmployee(InquireContext inquireContext) {
         return this.employeeEntityDao.inquirePageByCondition(inquireContext);
+    }
+
+    @Override
+    public EmployeeEntity inquireByEmpId(String empId) {
+        return this.employeeEntityDao.inquireByKey(empId);
     }
 }

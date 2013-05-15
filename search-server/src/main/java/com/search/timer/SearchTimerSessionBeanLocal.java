@@ -9,9 +9,5 @@ import javax.ejb.Local;
 @Local
 public interface SearchTimerSessionBeanLocal {
     
-    public void executeSpiderTask();
-    
-    public void executeParseTask();
-    
-    public void autoInsertUpdateTask();
+    public void updateEmployee();
 }

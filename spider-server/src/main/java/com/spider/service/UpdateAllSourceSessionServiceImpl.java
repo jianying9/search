@@ -1,6 +1,7 @@
 package com.spider.service;
 
 import com.spider.config.ActionNames;
+import com.spider.localservice.HttpClientLocalService;
 import com.spider.localservice.SourceLocalService;
 import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.service.ParameterTypeEnum;
@@ -23,10 +24,13 @@ public class UpdateAllSourceSessionServiceImpl implements Service {
     @InjectLocalService()
     private SourceLocalService sourceLocalService;
     //
+    @InjectLocalService()
+    private HttpClientLocalService httpClientLocalService;
 
     @Override
     public void execute(MessageContext messageContext) {
         this.sourceLocalService.updateAllSourceSession();
+        this.httpClientLocalService.init();
         messageContext.success();
     }
 }

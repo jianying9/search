@@ -13,23 +13,25 @@ import com.wolf.framework.utils.JsonUtils;
 import com.wolf.framework.worker.context.MessageContext;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
  * @author aladdin
  */
 @ServiceConfig(
-        actionName = ActionNames.GET_SEARCH_TEXT,
+        actionName = ActionNames.GET_SEARCH,
 parameterTypeEnum = ParameterTypeEnum.PARAMETER,
 importantParameter = {"tag", "location", "source"},
-returnParameter = {"textIdArr"},
+returnParameter = {"sourceIdArr"},
 parametersConfigs = {SourceParameter.class},
 validateSession = false,
 response = true,
-description = "抓取第三方渠道搜索结果文本服务")
-public class GetSearchTextServiceImpl implements Service {
+description = "抓取第三方渠道搜索结果服务")
+public class GetSearchServiceImpl implements Service {
 
     @InjectLocalService()
     private SourceLocalService sourceLocalService;
@@ -47,29 +49,33 @@ public class GetSearchTextServiceImpl implements Service {
         String text;
         String textId;
         Map<String, String> insertMap;
-        List<String> textIdList = new ArrayList<String>(50);
         List<Map<String, String>> insertMapList = new ArrayList<Map<String, String>>(50);
+        Set<String> sourceIdSet = new HashSet<String>(100, 1);
+        List<String> sourceIdList;
         StringBuilder textIdPrefixBuilder = new StringBuilder(64);
         textIdPrefixBuilder.append(source).append('_').append(location).append('_').append(tag).append('_');
         final String textIdprefix = textIdPrefixBuilder.toString();
-        for (int pageIndex = 1; pageIndex < 100; pageIndex++) {
+        for (int pageIndex = 1; pageIndex <= 50; pageIndex++) {
             text = this.sourceLocalService.getSearchText(sourceEnum, location, tag, pageIndex);
             if (text.length() == 0) {
                 break;
             } else {
+                //解析
+                sourceIdList = this.sourceLocalService.parseSearchText(sourceEnum, text);
+                sourceIdSet.addAll(sourceIdList);
+                //
                 textId = textIdprefix.concat(Integer.toString(pageIndex));
                 insertMap = new HashMap<String, String>(2, 1);
                 insertMap.put("id", textId);
                 insertMap.put("text", text);
                 insertMapList.add(insertMap);
-                textIdList.add(textId);
             }
         }
-        if (textIdList.isEmpty() == false) {
+        if (sourceIdSet.isEmpty() == false) {
             this.spiderDataLocalService.batchInsertSearchData(insertMapList);
-            String textIdJson = JsonUtils.listToJSON(textIdList);
+            String sourceIdJson = JsonUtils.setToJSON(sourceIdSet);
             Map<String, String> resultMap = new HashMap<String, String>(2, 1);
-            resultMap.put("textIdArr", textIdJson);
+            resultMap.put("sourceIdArr", sourceIdJson);
             messageContext.setMapData(resultMap);
             messageContext.success();
         }

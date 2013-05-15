@@ -36,7 +36,7 @@ public class InsertSearchTaskServiceImplJUnitTest extends AbstractSearchTest {
         Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
 //        parameterMap.put("tag", "android");
 //        parameterMap.put("tag", "iphone");
-        parameterMap.put("tag", "c++");
+        parameterMap.put("tag", "nginx");
         parameterMap.put("location", "福建");
         parameterMap.put("source", "SINA");
         String result = this.testHandler.execute(ActionNames.INSERT_SEARCH_TASK, parameterMap);
