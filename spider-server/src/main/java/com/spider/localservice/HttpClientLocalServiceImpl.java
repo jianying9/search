@@ -21,6 +21,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.params.HttpConnectionParams;
 import org.slf4j.Logger;
 
 /**
@@ -76,6 +77,8 @@ public class HttpClientLocalServiceImpl implements HttpClientLocalService {
         DefaultHttpClient client = httpClientManager.getClient();
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
         HttpGet httpGet = new HttpGet(url);
+        HttpConnectionParams.setConnectionTimeout(httpGet.getParams(), 20000);
+        HttpConnectionParams.setSoTimeout(httpGet.getParams(), 20000);
         try {
             responseBody = client.execute(httpGet, responseHandler);
         } catch (IOException ex) {

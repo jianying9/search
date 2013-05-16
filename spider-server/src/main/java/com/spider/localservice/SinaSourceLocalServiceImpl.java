@@ -31,6 +31,7 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
     private final String followPath = "${id}/follow?from=rel&wvr=5&loc=hisfollow";
     private final Map<String, String> regionMap = new HashMap<String, String>(16, 1);
     private final Pattern filterPattern = Pattern.compile("\\\\t|\\\\n|\\\\r|\\\\");
+    private final Pattern blandPattern = Pattern.compile(" ");
     private final Pattern searchIdPattern = Pattern.compile("(?:uid=\")(\\d*)");
     private final Pattern replaceIdPattern = Pattern.compile("\\$\\{id\\}");
     private final Pattern infoValuePattern = Pattern.compile("(?:\"con\">)([\\w\\W]*?)(?:<)");
@@ -204,6 +205,7 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
                     tagBuilder.append(value.toLowerCase()).append(' ');
                 }
                 tagValue = tagBuilder.toString();
+                tagValue = this.blandPattern.matcher(tagValue).replaceAll("");
             }
             resultMap.put("tag", tagValue);
             //检测
