@@ -42,7 +42,7 @@ public class TimerUpdateEmployeeServiceImpl implements Service {
         long currentTime = System.currentTimeMillis() - 86400000;
         InquireContext inquireContext = new InquireContext();
         inquireContext.setPageIndex(1);
-        inquireContext.setPageSize(50);
+        inquireContext.setPageSize(100);
         Condition condition = new Condition("lastUpdateTime", OperateTypeEnum.LESS, Long.toString(currentTime));
         inquireContext.addCondition(condition);
         InquireResult<EmployeeEntity> inquireResult = this.employeeLocalService.inquireEmployee(inquireContext);
