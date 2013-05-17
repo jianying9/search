@@ -13,9 +13,9 @@ import org.junit.Test;
  *
  * @author aladdin
  */
-public class TimerManageServiceImplJUnitTest extends AbstractSearchTest {
+public class TimerUpdateTagTotalServiceImplJUnitTest extends AbstractSearchTest {
 
-    public TimerManageServiceImplJUnitTest() {
+    public TimerUpdateTagTotalServiceImplJUnitTest() {
     }
 
     @BeforeClass
@@ -34,9 +34,7 @@ public class TimerManageServiceImplJUnitTest extends AbstractSearchTest {
     @Test
     public void test() {
         Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        parameterMap.put("timerState", "TIMER_UPDATE_EMPLOYEE_STATE");
-        parameterMap.put("option", "stop");
-        String result = this.testHandler.execute(ActionNames.TIMER_MANAGE, parameterMap);
+        String result = this.testHandler.execute(ActionNames.TIMER_UPDATE_TAG_TOTAL, parameterMap);
         System.out.println(result);
     }
 }

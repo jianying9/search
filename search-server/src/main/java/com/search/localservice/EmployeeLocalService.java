@@ -46,4 +46,6 @@ public interface EmployeeLocalService extends Local {
     public InquireResult<EmployeeEntity> inquireEmployee(InquireContext inquireContext);
     
     public EmployeeEntity inquireByEmpId(String empId);
+    
+    public int countByTag(String tag);
 }

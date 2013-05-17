@@ -10,4 +10,6 @@ import javax.ejb.Local;
 public interface SearchTimerSessionBeanLocal {
     
     public void updateEmployee();
+    
+    public void updateTagTotal();
 }

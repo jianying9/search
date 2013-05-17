@@ -3,6 +3,7 @@ package com.search.service;
 import com.search.config.ActionNames;
 import com.search.entity.TaskEntity;
 import com.search.localservice.EmployeeLocalService;
+import com.search.localservice.TagLocalService;
 import com.search.localservice.TaskLocalService;
 import com.search.parameter.SourceParameter;
 import com.search.task.SearchTaskImpl;
@@ -36,6 +37,9 @@ public class InsertSearchTaskServiceImpl implements Service {
     @InjectLocalService()
     private TaskLocalService taskLocalService;
     //
+    @InjectLocalService()
+    private TagLocalService tagLocalService;
+    //
     @InjectTaskExecutor
     private TaskExecutor taskExecutor;
 
@@ -46,7 +50,7 @@ public class InsertSearchTaskServiceImpl implements Service {
         String tag = messageContext.getParameter("tag");
         TaskEntity taskEntity = this.taskLocalService.insertSearchTask(source, location, tag);
         //触发更新任务
-        Task task = new SearchTaskImpl(this.taskExecutor, this.taskLocalService, this.employeeLocalService, taskEntity);
+        Task task = new SearchTaskImpl(this.taskExecutor, this.taskLocalService, this.tagLocalService, this.employeeLocalService, taskEntity);
         this.taskExecutor.submit(task);
         messageContext.setEntityData(taskEntity);
         messageContext.success();

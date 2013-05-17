@@ -4,7 +4,9 @@ import com.search.entity.EmployeeEntity;
 import com.wolf.framework.dao.EntityDao;
 import com.wolf.framework.dao.InquireResult;
 import com.wolf.framework.dao.annotation.InjectDao;
+import com.wolf.framework.dao.condition.Condition;
 import com.wolf.framework.dao.condition.InquireContext;
+import com.wolf.framework.dao.condition.OperateTypeEnum;
 import com.wolf.framework.local.LocalServiceConfig;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -128,5 +130,13 @@ public class EmployeeLocalServiceImpl implements EmployeeLocalService {
     @Override
     public EmployeeEntity inquireByEmpId(String empId) {
         return this.employeeEntityDao.inquireByKey(empId);
+    }
+
+    @Override
+    public int countByTag(String tag) {
+        InquireContext inquireContext = new InquireContext();
+        Condition condition = new Condition("tag", OperateTypeEnum.LIKE, tag);
+        inquireContext.addCondition(condition);
+        return this.employeeEntityDao.count(inquireContext);
     }
 }

@@ -3,6 +3,7 @@ package com.search.task;
 import com.search.entity.EmployeeEntity;
 import com.search.entity.TaskEntity;
 import com.search.localservice.EmployeeLocalService;
+import com.search.localservice.TagLocalService;
 import com.search.localservice.TaskLocalService;
 import com.spider.remote.SpiderRemoteManager;
 import com.wolf.framework.remote.FrameworkSessionBeanRemote;
@@ -25,12 +26,14 @@ public class SearchTaskImpl implements Task {
 
     private final TaskExecutor taskExecutor;
     private final TaskLocalService taskLocalService;
+    private final TagLocalService tagLocalService;
     private final EmployeeLocalService employeeLocalService;
     private final TaskEntity taskEntity;
 
-    public SearchTaskImpl(TaskExecutor taskExecutor, TaskLocalService taskLocalService, EmployeeLocalService employeeLocalService, TaskEntity taskEntity) {
+    public SearchTaskImpl(TaskExecutor taskExecutor, TaskLocalService taskLocalService, TagLocalService tagLocalService, EmployeeLocalService employeeLocalService, TaskEntity taskEntity) {
         this.taskExecutor = taskExecutor;
         this.taskLocalService = taskLocalService;
+        this.tagLocalService = tagLocalService;
         this.employeeLocalService = employeeLocalService;
         this.taskEntity = taskEntity;
     }
@@ -82,9 +85,9 @@ public class SearchTaskImpl implements Task {
                     empId = this.employeeLocalService.createEmpId(source, sId);
                     empEntity = this.employeeLocalService.inquireByEmpId(empId);
                     if (empEntity == null) {
-                        task = new InsertEmployeeTaskImpl(this.employeeLocalService, empId);
+                        task = new InsertEmployeeTaskImpl(this.employeeLocalService, this.tagLocalService, empId);
                     } else {
-                        task = new UpdateEmployeeTaskImpl(this.employeeLocalService, empId);
+                        task = new UpdateEmployeeTaskImpl(this.employeeLocalService, this.tagLocalService, empId);
                     }
                     taskList.add(task);
                 }

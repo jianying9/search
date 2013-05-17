@@ -9,8 +9,6 @@ import java.util.Map;
 import javax.ejb.Schedule;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import org.slf4j.Logger;
 
 /**
@@ -24,7 +22,6 @@ public class SearchTimerSessionBean extends AbstractTimer implements SearchTimer
     private Logger logger = LogFactory.getLogger(SearchLoggerEnum.TIMER);
 
     @Schedule(minute = "*", second = "0", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*", persistent = false)
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public void updateEmployee() {
         this.logger.info("timer:TIMER_UPDATE_EMPLOYEE------start");
@@ -36,5 +33,15 @@ public class SearchTimerSessionBean extends AbstractTimer implements SearchTimer
             this.logger.info("timer:TIMER_UPDATE_EMPLOYEE------state -> stop");
         }
         this.logger.info("timer:TIMER_UPDATE_EMPLOYEE------finished");
+    }
+
+    @Schedule(minute = "*", second = "5", dayOfMonth = "*", month = "*", year = "*", hour = "*", dayOfWeek = "*", persistent = false)
+    @Override
+    public void updateTagTotal() {
+        this.logger.info("timer:TIMER_UPDATE_TAG_TOTAL------start");
+        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
+        String result = this.executeService(ActionNames.TIMER_UPDATE_TAG_TOTAL, parameterMap);
+        System.out.println(result);
+        this.logger.info("timer:TIMER_UPDATE_TAG_TOTAL------finished");
     }
 }

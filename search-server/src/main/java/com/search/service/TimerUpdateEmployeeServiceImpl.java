@@ -3,6 +3,7 @@ package com.search.service;
 import com.search.config.ActionNames;
 import com.search.entity.EmployeeEntity;
 import com.search.localservice.EmployeeLocalService;
+import com.search.localservice.TagLocalService;
 import com.search.task.UpdateEmployeeTaskImpl;
 import com.wolf.framework.dao.InquireResult;
 import com.wolf.framework.dao.condition.Condition;
@@ -34,6 +35,9 @@ public class TimerUpdateEmployeeServiceImpl implements Service {
     @InjectLocalService()
     private EmployeeLocalService employeeLocalService;
     //
+    @InjectLocalService()
+    private TagLocalService tagLocalService;
+    //
     @InjectTaskExecutor
     private TaskExecutor taskExecutor;
 
@@ -57,7 +61,7 @@ public class TimerUpdateEmployeeServiceImpl implements Service {
             //生成更新任务
             Task task;
             for (EmployeeEntity empEntity : empEntityList) {
-                task = new UpdateEmployeeTaskImpl(this.employeeLocalService, empEntity.getEmpId());
+                task = new UpdateEmployeeTaskImpl(this.employeeLocalService, this.tagLocalService, empEntity.getEmpId());
                 this.taskExecutor.submit(task);
             }
         }
