@@ -23,7 +23,7 @@ public interface SourceHandler {
     
     public void sendMessage(String id, String nickName, String text);
     
-    public Map<String, String> getNewCookie(Map<String, String> cookieMap);
+    public String getNewCookie(String userName, String cookies);
     
-    public Map<String, String> getLoginCookie(String userName, String password);
+    public String getLoginCookie(String userName, String password);
 }

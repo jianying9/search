@@ -11,4 +11,6 @@ public class TimerState {
     public final static int STATE_STOP = 0;
     
     public static int TIMER_UPDATE_EMPLOYEE_STATE = 1;
+    
+    public static int TIMER_UPDATE_TAG_TOTAL_STATE = 1;
 }

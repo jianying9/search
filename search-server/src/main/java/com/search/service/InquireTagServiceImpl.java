@@ -1,8 +1,8 @@
 package com.search.service;
 
 import com.search.config.ActionNames;
-import com.search.entity.EmployeeEntity;
-import com.search.localservice.EmployeeLocalService;
+import com.search.entity.TagEntity;
+import com.search.localservice.TagLocalService;
 import com.wolf.framework.dao.InquireResult;
 import com.wolf.framework.dao.condition.Condition;
 import com.wolf.framework.dao.condition.InquireContext;
@@ -21,37 +21,36 @@ import java.util.List;
  * @author aladdin
  */
 @ServiceConfig(
-        actionName = ActionNames.INQUIRE_EMPLOYEE,
-parameterTypeEnum = ParameterTypeEnum.PARAMETER,
-importantParameter = {"tag"},
-returnParameter = {"empId", "gender", "nickName", "empName", "location", "tag", "lastUpdateTime"},
-parametersConfigs = {EmployeeEntity.class},
+        actionName = ActionNames.INQUIRE_TAG,
+parameterTypeEnum = ParameterTypeEnum.NO_PARAMETER,
+returnParameter = {"tag", "total", "lastUpdateTime"},
+parametersConfigs = {TagEntity.class},
 validateSession = false,
 page = true,
 response = true,
-description = "查询人员任务")
-public class InquireEmployeeServiceImpl implements Service {
+description = "查询标签统计信息服务")
+public class InquireTagServiceImpl implements Service {
     
     @InjectLocalService()
-    private EmployeeLocalService employeeLocalService;
+    private TagLocalService tagLocalService;
     
     @Override
     public void execute(MessageContext messageContext) {
-        String tag = messageContext.getParameter("tag");
         //小写
-        tag = tag.toLowerCase();
         InquireContext inquireContext = new InquireContext();
         inquireContext.setPageIndex(messageContext.getPageIndex());
         inquireContext.setPageSize(messageContext.getPageSize());
         Condition condition;
-        condition = new Condition("tag", OperateTypeEnum.LIKE, tag);
+        condition = new Condition("state", OperateTypeEnum.LESS, Integer.toString(TagLocalService.STATE_INGORE));
         inquireContext.addCondition(condition);
-        InquireResult<EmployeeEntity> inquireResult = this.employeeLocalService.inquireEmployee(inquireContext);
+        Order order = new Order("total", OrderTypeEnum.DESC);
+        inquireContext.addOrder(order);
+        InquireResult<TagEntity> inquireResult = this.tagLocalService.inquireTag(inquireContext);
         if (inquireResult.isEmpty() == false) {
-            List<EmployeeEntity> empEntityList = inquireResult.getResultList();
+            List<TagEntity> tagEntityList = inquireResult.getResultList();
             messageContext.setPageTotal(inquireResult.getTotal());
             messageContext.setPageNum(inquireResult.getPageNum());
-            messageContext.setEntityListData(empEntityList);
+            messageContext.setEntityListData(tagEntityList);
             messageContext.success();
         }
     }

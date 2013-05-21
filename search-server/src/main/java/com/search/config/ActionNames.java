@@ -12,6 +12,8 @@ public class ActionNames {
     public final static String INQUIRE_SEARCH_TASK = "INQUIRE_SEARCH_TASK";
     //人员搜索
     public final static String INQUIRE_EMPLOYEE = "INQUIRE_EMPLOYEE";
+    //标签排名查询
+    public final static String INQUIRE_TAG = "INQUIRE_TAG";
     //----------------------------------timer------------------------
     //定时更新人员的信息和关注人员
     public final static String TIMER_UPDATE_EMPLOYEE = "TIMER_UPDATE_EMPLOYEE";
@@ -19,4 +21,7 @@ public class ActionNames {
     public final static String TIMER_UPDATE_TAG_TOTAL = "TIMER_UPDATE_TAG_TOTAL";
     //定时任务开关
     public final static String TIMER_MANAGE = "TIMER_MANAGE";
+    //-----------------------------------维护-----
+    //手动解析已有人员信息的所有标签
+    public final static String CONSOLE_PARSE_ALL_EMPLOYEE_TAG = "CONSOLE_PARSE_ALL_EMPLOYEE_TAG";
 }

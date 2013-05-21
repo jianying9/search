@@ -41,6 +41,22 @@ $.yyLoadListener('search-main', {
                     searchEmployeeWindow.bounceIn();
                 }
             }
+        },
+        inquireTagListener:{
+            click:function (yy) {
+                var mainPanel = yy.findInModule('main-content');
+                var inquireTagWindow = mainPanel.openWindow({
+                    class:'yy_hide',
+                    key:'inquire-tag-window'
+                });
+                inquireTagWindow.setHeaderLabel('标签排行');
+                inquireTagWindow.loadModule('search-tag');
+                if (inquireTagWindow.isVisible()) {
+                    inquireTagWindow.bounceOut();
+                } else {
+                    inquireTagWindow.bounceIn();
+                }
+            }
         }
     },
     messageListener:{

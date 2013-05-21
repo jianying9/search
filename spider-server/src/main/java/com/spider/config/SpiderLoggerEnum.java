@@ -9,7 +9,8 @@ import com.wolf.framework.logger.LoggerType;
 public enum SpiderLoggerEnum implements LoggerType{
     
     HTTP_CLIENT,
-    SINA;
+    SINA,
+    TIMER;
 
     @Override
     public String getLoggerName() {

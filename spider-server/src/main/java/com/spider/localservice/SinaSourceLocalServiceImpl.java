@@ -1,10 +1,11 @@
 package com.spider.localservice;
 
 import com.spider.config.SourceEnum;
-import com.wolf.browser.BrowserProxySessionBeanRemote;
-import com.wolf.browser.BrowserProxySessionBeanRemoteFactory;
+import com.wolf.browser.BrowserRemoteManager;
 import com.wolf.framework.local.InjectLocalService;
 import com.wolf.framework.local.LocalServiceConfig;
+import com.wolf.framework.remote.FrameworkSessionBeanRemote;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  *
@@ -40,12 +43,6 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
     private final Pattern followPattern = Pattern.compile("(?:\"id=)(\\d*)");
     private final Map<String, String> attrNameMap = new HashMap<String, String>(4, 1);
     private final String[] attrNames = {"nickName", "location", "gender", "empName"};
-    //
-    private final String userNameXPath = "/html/body/div/div[2]/div[2]/div[2]/div/div/div/input";
-    private final String passwordXPath = "/html/body/div/div[2]/div[2]/div[2]/div/div[2]/div/input";
-    private final String checkCodeXPath = "/html/body/div/div[2]/div[2]/div[2]/div/div[3]/div/input";
-    private final int checkCodeLength = 5;
-    private final String loginBtnXPath = "/html/body/div/div[2]/div[2]/div[2]/div/div[6]/a/span";
     //
     @InjectLocalService()
     private HttpClientLocalService httpClientLocalService;
@@ -263,14 +260,48 @@ public class SinaSourceLocalServiceImpl implements SinaSourceLocalService {
     }
 
     @Override
-    public Map<String, String> getNewCookie(Map<String, String> cookieMap) {
-        BrowserProxySessionBeanRemote remote = BrowserProxySessionBeanRemoteFactory.getBrowserProxySessionBeanRemote();
-        return remote.getNewCookie(this.rootUrl, cookieMap);
+    public String getNewCookie(String userName, String cookies) {
+        FrameworkSessionBeanRemote remote = BrowserRemoteManager.getBrowserProxySessionBeanRemote();
+        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
+        parameterMap.put("userName", userName);
+        parameterMap.put("cookie", cookies);
+        String result = remote.execute("GET_SINA_SESSION_BY_COOKIE", parameterMap);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode resultNode;
+        try {
+            resultNode = mapper.readValue(result, JsonNode.class);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        String flag = resultNode.get("flag").getTextValue();
+        String newCookie = "";
+        if (flag.equals("SUCCESS")) {
+            JsonNode dataNode = resultNode.get("data");
+            newCookie = dataNode.get("cookie").getTextValue();
+        }
+        return newCookie;
     }
 
     @Override
-    public Map<String, String> getLoginCookie(String userName, String password) {
-        BrowserProxySessionBeanRemote remote = BrowserProxySessionBeanRemoteFactory.getBrowserProxySessionBeanRemote();
-        return remote.getLoginCookie(this.rootUrl, userName, this.userNameXPath, password, this.passwordXPath, this.checkCodeXPath, this.checkCodeLength, this.loginBtnXPath);
+    public String getLoginCookie(String userName, String password) {
+        FrameworkSessionBeanRemote remote = BrowserRemoteManager.getBrowserProxySessionBeanRemote();
+        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
+        parameterMap.put("userName", userName);
+        parameterMap.put("password", password);
+        String result = remote.execute("GET_SINA_SESSION_BY_LOGIN", parameterMap);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode resultNode;
+        try {
+            resultNode = mapper.readValue(result, JsonNode.class);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        String flag = resultNode.get("flag").getTextValue();
+        String newCookie = "";
+        if (flag.equals("SUCCESS")) {
+            JsonNode dataNode = resultNode.get("data");
+            newCookie = dataNode.get("cookie").getTextValue();
+        }
+        return newCookie;
     }
 }

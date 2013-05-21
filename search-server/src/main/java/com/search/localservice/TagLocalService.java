@@ -17,6 +17,8 @@ public interface TagLocalService extends Local{
     
     public int STATE_NEW = 1;
     
+    public int STATE_INGORE = 99;
+    
     public TagEntity inquireByTag(String tag);
     
     public void batchInsert(List<String> tagList);

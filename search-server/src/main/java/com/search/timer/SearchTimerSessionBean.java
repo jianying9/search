@@ -39,9 +39,13 @@ public class SearchTimerSessionBean extends AbstractTimer implements SearchTimer
     @Override
     public void updateTagTotal() {
         this.logger.info("timer:TIMER_UPDATE_TAG_TOTAL------start");
-        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
-        String result = this.executeService(ActionNames.TIMER_UPDATE_TAG_TOTAL, parameterMap);
-        System.out.println(result);
+        if (TimerState.TIMER_UPDATE_TAG_TOTAL_STATE == TimerState.STATE_START) {
+            Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
+            String result = this.executeService(ActionNames.TIMER_UPDATE_TAG_TOTAL, parameterMap);
+            System.out.println(result);
+        } else {
+            this.logger.info("timer:TIMER_UPDATE_TAG_TOTAL------state -> stop");
+        }
         this.logger.info("timer:TIMER_UPDATE_TAG_TOTAL------finished");
     }
 }

@@ -1,4 +1,4 @@
-package com.search.service;
+package com.search.service.timer;
 
 import com.search.config.ActionNames;
 import com.search.parameter.TimerParameter;
@@ -31,6 +31,12 @@ public class TimerManageServiceImpl implements Service {
                 TimerState.TIMER_UPDATE_EMPLOYEE_STATE = TimerState.STATE_START;
             } else {
                 TimerState.TIMER_UPDATE_EMPLOYEE_STATE = TimerState.STATE_STOP;
+            }
+        } else if (timerState.equals("TIMER_UPDATE_TAG_TOTAL_STATE")) {
+            if(option.equals("start")) {
+                TimerState.TIMER_UPDATE_TAG_TOTAL_STATE = TimerState.STATE_START;
+            } else {
+                TimerState.TIMER_UPDATE_TAG_TOTAL_STATE = TimerState.STATE_STOP;
             }
         }
         messageContext.success();

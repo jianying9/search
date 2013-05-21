@@ -60,12 +60,23 @@ public class SearchRemoteJUnitTest {
     //
 
     @Test
-    public void testRemoteExecuteSpiderTask() {
+    public void testTimerManager() {
         Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
         parameterMap.put("timerState", "TIMER_UPDATE_EMPLOYEE_STATE");
-        parameterMap.put("option", "stop");
+        parameterMap.put("option", "start");
         FrameworkSessionBeanRemote remote = this.getRemote();
         String result = remote.execute(ActionNames.TIMER_MANAGE, parameterMap);
+        System.out.println(result);
+        parameterMap.put("timerState", "TIMER_UPDATE_TAG_TOTAL_STATE");
+        result = remote.execute(ActionNames.TIMER_MANAGE, parameterMap);
+        System.out.println(result);
+    }
+    
+//    @Test
+    public void testRemote() {
+        Map<String, String> parameterMap = new HashMap<String, String>(2, 1);
+        FrameworkSessionBeanRemote remote = this.getRemote();
+        String result = remote.execute(ActionNames.CONSOLE_PARSE_ALL_EMPLOYEE_TAG, parameterMap);
         System.out.println(result);
     }
 }

@@ -1,10 +1,10 @@
-package com.search.service;
+package com.search.service.console;
 
 import com.search.config.ActionNames;
 import com.search.entity.EmployeeEntity;
 import com.search.localservice.EmployeeLocalService;
 import com.search.localservice.TagLocalService;
-import com.search.task.UpdateEmployeeTaskImpl;
+import com.search.task.LocalUpdateEmployeeTaskImpl;
 import com.wolf.framework.dao.InquireResult;
 import com.wolf.framework.dao.condition.Condition;
 import com.wolf.framework.dao.condition.InquireContext;
@@ -25,12 +25,13 @@ import java.util.List;
  * @author aladdin
  */
 @ServiceConfig(
-        actionName = ActionNames.TIMER_UPDATE_EMPLOYEE,
+        actionName = ActionNames.CONSOLE_PARSE_ALL_EMPLOYEE_TAG,
 parameterTypeEnum = ParameterTypeEnum.NO_PARAMETER,
 validateSession = false,
+page = true,
 response = true,
-description = "生成50个最近1天没有更新的人员的更新任务，包括更新人员信息以及关注信息")
-public class TimerUpdateEmployeeServiceImpl implements Service {
+description = "重新解析所有用户的标签信息")
+public class ConsoleParseAllEmployeeTagServiceImpl implements Service {
 
     @InjectLocalService()
     private EmployeeLocalService employeeLocalService;
@@ -43,27 +44,27 @@ public class TimerUpdateEmployeeServiceImpl implements Service {
 
     @Override
     public void execute(MessageContext messageContext) {
-        long currentTime = System.currentTimeMillis() - 86400000;
         InquireContext inquireContext = new InquireContext();
         inquireContext.setPageIndex(1);
-        inquireContext.setPageSize(100);
-        Condition condition = new Condition("lastUpdateTime", OperateTypeEnum.LESS, Long.toString(currentTime));
+        inquireContext.setPageSize(1000);
+        Condition condition = new Condition("lastUpdateTime", OperateTypeEnum.EQUAL, "9999999");
         inquireContext.addCondition(condition);
         InquireResult<EmployeeEntity> inquireResult = this.employeeLocalService.inquireEmployee(inquireContext);
-        if (inquireResult.isEmpty() == false) {
-            //更新时间
+        while (inquireResult.isEmpty() == false) {
             List<EmployeeEntity> empEntityList = inquireResult.getResultList();
             List<String> empIdList = new ArrayList<String>(empEntityList.size());
             for (EmployeeEntity employeeEntity : empEntityList) {
                 empIdList.add(employeeEntity.getEmpId());
             }
             this.employeeLocalService.batchUpdateTime(empIdList);
-            //生成更新任务
             Task task;
-            for (EmployeeEntity empEntity : empEntityList) {
-                task = new UpdateEmployeeTaskImpl(this.employeeLocalService, this.tagLocalService, empEntity.getEmpId());
-                this.taskExecutor.submit(task);
+            for (EmployeeEntity employeeEntity : empEntityList) {
+                task = new LocalUpdateEmployeeTaskImpl(this.employeeLocalService, this.tagLocalService, employeeEntity.getEmpId());
+//                this.taskExecutor.submit(task);
+                task.run();
             }
+            //
+            inquireResult = this.employeeLocalService.inquireEmployee(inquireContext);
         }
         messageContext.success();
     }

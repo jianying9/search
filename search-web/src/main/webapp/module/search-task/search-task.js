@@ -15,17 +15,11 @@ $.yyLoadListener('search-task', {
                         case 1:
                             state = '抓取中';
                             break;
-                        case 2:
-                            state = '解析中';
-                            break;
                         case 0:
                             state = '完成';
                             break;
                         case 199:
                             state = '爬虫异常';
-                            break;
-                        case 299:
-                            state = '解析异常';
                             break;
                     }
                     var result = '<div class="task_tag">' + data.context.tag +'</div>' +

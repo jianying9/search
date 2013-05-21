@@ -1,4 +1,4 @@
-package com.search.service;
+package com.search.service.timer;
 
 import com.search.config.ActionNames;
 import com.search.entity.TagEntity;
@@ -40,7 +40,7 @@ public class TimerUpdateTagTotalServiceImpl implements Service {
     public void execute(MessageContext messageContext) {
         InquireContext inquireContext = new InquireContext();
         inquireContext.setPageIndex(1);
-        inquireContext.setPageSize(20);
+        inquireContext.setPageSize(10);
         long time = System.currentTimeMillis() - 43200000;
         Condition condition = new Condition("lastUpdateTime", OperateTypeEnum.LESS, Long.toString(time));
         inquireContext.addCondition(condition);

@@ -28,6 +28,4 @@ public interface SourceLocalService extends Local{
     public void checkAllSourceSession();
     
     public void checkSourceSession(String sessionId);
-    
-    public void insertLoginSession(SourceEnum sourceEnum, String userName, String password);
 }

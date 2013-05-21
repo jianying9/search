@@ -2,7 +2,9 @@ package com.spider.service;
 
 import com.spider.AbstractSpiderTest;
 import com.spider.config.ActionNames;
+import com.wolf.framework.config.DefaultResponseFlagEnum;
 import java.util.HashMap;
+import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -12,9 +14,9 @@ import org.junit.Test;
  *
  * @author aladdin
  */
-public class CheckAllSourceSessionServiceImplJUnitTest extends AbstractSpiderTest {
+public class GetLocalInfoServiceImplJUnitTest extends AbstractSpiderTest {
 
-    public CheckAllSourceSessionServiceImplJUnitTest() {
+    public GetLocalInfoServiceImplJUnitTest() {
     }
 
     @BeforeClass
@@ -32,7 +34,10 @@ public class CheckAllSourceSessionServiceImplJUnitTest extends AbstractSpiderTes
 
     @Test
     public void test() {
-        String result = this.testHandler.execute(ActionNames.TIMER_CHECK_ALL_SOURCE_SESSION, new HashMap<String, String>(2, 1));
+        Map<String, String> parameterMap = new HashMap<String, String>(4, 1);
+        parameterMap.put("sourceId", "1921966584");
+        parameterMap.put("source", "SINA");
+        String result = this.testHandler.execute(ActionNames.GET_LOCAL_INFO, parameterMap);
         System.out.println(result);
     }
 }

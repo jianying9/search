@@ -23,8 +23,4 @@ public interface SourceSessionLocalService extends Local{
     public SourceSessionEntity inquireBySessionId(String sessionId);
     
     public String[] parseSessionId(String sessionId);
-    
-    public Map<String, String> parseCookie(String cookies);
-    
-    public String createCookie(Map<String, String> cookieMap);
 }

@@ -34,12 +34,14 @@ description = "负责http client的管理")
 public class HttpClientLocalServiceImpl implements HttpClientLocalService {
 
     private final Map<SourceEnum, HttpClientManager> clientManagerMap = new EnumMap<SourceEnum, HttpClientManager>(SourceEnum.class);
+    private volatile boolean isReady = false;
     //
     @InjectLocalService()
     private SourceSessionLocalService sourceSessionLocalService;
 
     @Override
     public void init() {
+        this.isReady = false;
         List<SourceSessionEntity> sessionEntityList = this.sourceSessionLocalService.getAll();
         SourceEnum sourceEnum;
         String[] sessionIdInfo;
@@ -68,23 +70,41 @@ public class HttpClientLocalServiceImpl implements HttpClientLocalService {
                 httpClientManager.add(httpClient);
             }
         }
+        this.isReady = true;
     }
 
     @Override
     public String get(SourceEnum sourceEnum, String url) {
         String responseBody = "";
-        HttpClientManager httpClientManager = this.clientManagerMap.get(sourceEnum);
-        DefaultHttpClient client = httpClientManager.getClient();
-        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        HttpGet httpGet = new HttpGet(url);
-        HttpConnectionParams.setConnectionTimeout(httpGet.getParams(), 20000);
-        HttpConnectionParams.setSoTimeout(httpGet.getParams(), 20000);
-        try {
-            responseBody = client.execute(httpGet, responseHandler);
-        } catch (IOException ex) {
-            Logger logger = LogFactory.getLogger(SpiderLoggerEnum.HTTP_CLIENT);
-            logger.error("httpClient get error!", ex);
+        if (this.isReady) {
+            HttpClientManager httpClientManager = this.clientManagerMap.get(sourceEnum);
+            DefaultHttpClient client = httpClientManager.getClient();
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            HttpGet httpGet = new HttpGet(url);
+            HttpConnectionParams.setConnectionTimeout(httpGet.getParams(), 20000);
+            HttpConnectionParams.setSoTimeout(httpGet.getParams(), 20000);
+            try {
+                responseBody = client.execute(httpGet, responseHandler);
+            } catch (IOException ex) {
+                Logger logger = LogFactory.getLogger(SpiderLoggerEnum.HTTP_CLIENT);
+                logger.error("httpClient get error!", ex);
+            }
         }
         return responseBody;
+    }
+
+    @Override
+    public boolean isReady() {
+        return this.isReady;
+    }
+
+    @Override
+    public void unready() {
+        this.isReady = false;
+    }
+
+    @Override
+    public void ready() {
+        this.isReady = true;
     }
 }
