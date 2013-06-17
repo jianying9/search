@@ -30,7 +30,7 @@ $.yyLoadPlugin({
         parsers.put('yy_form', {
             group:true,
             config:[],
-            childParsers:['yy_button'],
+            childParsers:['yy_button', 'yy_datepicker'],
             _utils:utils,
             parse:function (yy, config) {
                 yy.extend.field = {};
@@ -107,6 +107,15 @@ $.yyLoadPlugin({
             group:false,
             config:[],
             childParsers:[]
+        });
+        //
+        parsers.put('yy_datepicker', {
+            group:false,
+            config:[],
+            childParsers:[],
+            parse:function (yy, config) {
+                yy.$this.datepicker();
+            }
         });
         //
         parsers.put('yy_tab_item', {

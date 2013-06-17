@@ -1020,60 +1020,68 @@
 //初始化全局事件
     root.$this.click(function (event) {
         var target = event.target;
-        while (target.id === '') {
-            target = target.parentElement;
-        }
-        var targetId = target.id;
-        var yy = components.findById(targetId);
-        var result;
-        while (yy) {
-            if (yy && yy.eventListener && yy.eventListener.click) {
-                result = yy.eventListener.click(yy, event);
-                if (!result) {
-                    break;
-                }
+        if(target.id) {
+            while (target.id === '') {
+                target = target.parentElement;
             }
-            yy = yy.parent;
+            var targetId = target.id;
+            var yy = components.findById(targetId);
+            var result;
+            while (yy) {
+                if (yy && yy.eventListener && yy.eventListener.click) {
+                    result = yy.eventListener.click(yy, event);
+                    if (!result) {
+                        break;
+                    }
+                }
+                yy = yy.parent;
+            }
         }
     });
     root.$this.dblclick(function (event) {
         var target = event.target;
-        while (target.id === '') {
-            target = target.parentElement;
-        }
-        var targetId = target.id;
-        var yy = components.findById(targetId);
-        if (yy && yy.eventListener && yy.eventListener.dbclick) {
-            yy.eventListener.dbclick(yy, event);
+        if(target.id) {
+            while (target.id === '') {
+                target = target.parentElement;
+            }
+            var targetId = target.id;
+            var yy = components.findById(targetId);
+            if (yy && yy.eventListener && yy.eventListener.dbclick) {
+                yy.eventListener.dbclick(yy, event);
+            }
         }
     });
     root.$this.mousedown(function (event) {
         var target = event.target;
-        while (target.id === '') {
-            target = target.parentElement;
-        }
-        var targetId = target.id;
-        var yy = components.findById(targetId);
-        if (yy && yy.eventListener && yy.eventListener.mousedown) {
-            yy.eventListener.mousedown(yy, event);
+        if(target.id) {
+            while (target.id === '') {
+                target = target.parentElement;
+            }
+            var targetId = target.id;
+            var yy = components.findById(targetId);
+            if (yy && yy.eventListener && yy.eventListener.mousedown) {
+                yy.eventListener.mousedown(yy, event);
+            }
         }
     });
     root.$this.mouseup(function (event) {
         var target = event.target;
-        while (target.id === '') {
-            target = target.parentElement;
-        }
-        var targetId = target.id;
-        var yy = components.findById(targetId);
-        var result;
-        while (yy) {
-            if (yy && yy.eventListener && yy.eventListener.mouseup) {
-                result = yy.eventListener.mouseup(yy, event);
-                if (!result) {
-                    break;
-                }
+        if(target.id) {
+            while (target.id === '') {
+                target = target.parentElement;
             }
-            yy = yy.parent;
+            var targetId = target.id;
+            var yy = components.findById(targetId);
+            var result;
+            while (yy) {
+                if (yy && yy.eventListener && yy.eventListener.mouseup) {
+                    result = yy.eventListener.mouseup(yy, event);
+                    if (!result) {
+                        break;
+                    }
+                }
+                yy = yy.parent;
+            }
         }
     });
     root.$this.mousemove(function (event) {
@@ -1083,20 +1091,22 @@
     });
     root.$this.mousewheel(function (event, delta, deltaX, deltaY) {
         var target = event.target;
-        while (target.id === '') {
-            target = target.parentElement;
-        }
-        var targetId = target.id;
-        var yy = components.findById(targetId);
-        var result;
-        while (yy) {
-            if (yy && yy.eventListener && yy.eventListener.mousewheel) {
-                result = yy.eventListener.mousewheel(yy, event, delta, deltaX, deltaY);
-                if (!result) {
-                    break;
-                }
+        if(target.id) {
+            while (target.id === '') {
+                target = target.parentElement;
             }
-            yy = yy.parent;
+            var targetId = target.id;
+            var yy = components.findById(targetId);
+            var result;
+            while (yy) {
+                if (yy && yy.eventListener && yy.eventListener.mousewheel) {
+                    result = yy.eventListener.mousewheel(yy, event, delta, deltaX, deltaY);
+                    if (!result) {
+                        break;
+                    }
+                }
+                yy = yy.parent;
+            }
         }
     });
     root.$this.keyup(function (event) {
@@ -1104,25 +1114,29 @@
             var keyCode = event.keyCode;
             if (keyCode == 13) {
                 var target = event.target;
-                while (target.id === '') {
-                    target = target.parentElement;
-                }
-                var targetId = target.id;
-                var yy = components.findById(targetId);
-                if (yy && yy.eventListener && yy.eventListener.enter) {
-                    yy.eventListener.enter(yy, event);
+                if(target.id) {
+                    while (target.id === '') {
+                        target = target.parentElement;
+                    }
+                    var targetId = target.id;
+                    var yy = components.findById(targetId);
+                    if (yy && yy.eventListener && yy.eventListener.enter) {
+                        yy.eventListener.enter(yy, event);
+                    }
                 }
             }
             if (keyCode == 229 || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 48 && keyCode <= 57) || keyCode == 8 || (keyCode >= 188 && keyCode <= 192) || (keyCode >= 219 && keyCode <= 222) || keyCode == 32 || keyCode == 46) {
                 var target = event.target;
-                while (target.id === '') {
-                    target = target.parentElement;
-                }
-                var targetId = target.id;
-                var yy = components.findById(targetId);
-                if (yy && yy.type === 'yy_form' && yy.eventListener && yy.eventListener.change) {
-                    if (yy.isChange()) {
-                        yy.eventListener.change(yy, event);
+                if(target.id) {
+                    while (target.id === '') {
+                        target = target.parentElement;
+                    }
+                    var targetId = target.id;
+                    var yy = components.findById(targetId);
+                    if (yy && yy.type === 'yy_form' && yy.eventListener && yy.eventListener.change) {
+                        if (yy.isChange()) {
+                            yy.eventListener.change(yy, event);
+                        }
                     }
                 }
             }

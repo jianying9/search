@@ -6,11 +6,13 @@
     <title></title>
     <meta name="description" content="search">
     <link rel="stylesheet" href="libs/css/animate.css"/>
+    <link rel="stylesheet" href="libs/css/jquery-ui-1.10.3.datepicker.css"/>
     <link rel="stylesheet" href="libs/css/yy.css"/>
     <link rel="stylesheet" href="css/search.css"/>
-    <script type="text/javascript" src="libs/scripts/modernizr-2.6.2.js"></script>
-    <script type="text/javascript" src="libs/scripts/jquery-1.7.2.js"></script>
-    <script type="text/javascript" src="libs/scripts/jquery.mousewheel.js"></script>
+    <!--<script type="text/javascript" src="libs/scripts/modernizr-2.6.2.js"></script>-->
+    <script type="text/javascript" src="libs/scripts/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="libs/scripts/jquery.mousewheel-3.0.6.js"></script>
+    <script type="text/javascript" src="libs/scripts/jquery-ui-1.10.3.datepicker.js"></script>
 </head>
 <body>
 <script type="text/javascript" src="libs/scripts/yy.js"></script>
@@ -26,7 +28,7 @@
             logLevel:4
         });
         //加载主模块
-        $.yyLoadModule('search-main');
+        $.yyLoadModule('search-date');
 //        $.yyLoadModule('team-user', function(yy) {
 //            var loginForm = yy.findInModule('team-login-form');
 //            loginForm.loadData({userEmail:'ljy18659199765@gmail.com'});
