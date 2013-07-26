@@ -354,7 +354,7 @@ function Datepicker() {
 		dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], // For formatting
 		dayNamesMin: ["日","一","二","三","四","五","六"], // Column headings for days starting at Sunday
 		weekHeader: "周", // Column header for week of the year
-		dateFormat: "yy-mm-dd", // See format options on parseDate
+		dateFormat: "yy-mm-dd hh:ii:ss", // See format options on parseDate
 		firstDay: 1, // The first day of the week, Sun = 0, Mon = 1, ...
 		isRTL: false, // True if right-to-left language, false if left-to-right
 		showMonthAfterYear: true, // True if the year select precedes month, false for month then year
@@ -375,8 +375,8 @@ function Datepicker() {
 			// if not applicable, false to just disable them
 		navigationAsDateFormat: false, // True if date formatting applied to prev/today/next links
 		gotoCurrent: false, // True if today link goes back to current selection instead
-		changeMonth: false, // True if month can be selected directly, false if only prev/next
-		changeYear: false, // True if year can be selected directly, false if only prev/next
+		changeMonth: true, // True if month can be selected directly, false if only prev/next
+		changeYear: true, // True if year can be selected directly, false if only prev/next
 		yearRange: "c-10:c+10", // Range of years to display in drop-down,
 			// either relative to today's year (-nn:+nn), relative to currently displayed year
 			// (c-nn:c+nn), absolute (nnnn:nnnn), or a combination of the above (nnnn:-n)
@@ -1493,6 +1493,16 @@ $.extend(Datepicker.prototype, {
 							literal = true;
 						}
 						break;
+                    case 'h':
+                        break;
+                    case 'i':
+                        break;
+                    case 's':
+                        break;
+                    case ' ':
+                        break;
+                    case ':':
+                        break;
 					default:
 						checkLiteral();
 				}
@@ -1643,6 +1653,15 @@ $.extend(Datepicker.prototype, {
 							output += (lookAhead("y") ? date.getFullYear() :
 								(date.getYear() % 100 < 10 ? "0" : "") + date.getYear() % 100);
 							break;
+                        case 'h':
+                            output += formatNumber("h", date.getHours(), 2);
+                            break;
+                        case 'i':
+                            output += formatNumber("i", date.getMinutes(), 2);
+                            break;
+                        case 's':
+                            output += formatNumber("s", date.getSeconds(), 2);
+                            break;
 						case "@":
 							output += date.getTime();
 							break;
@@ -2246,9 +2265,25 @@ $.extend(Datepicker.prototype, {
 			inst.currentMonth = inst.selectedMonth;
 			inst.currentYear = inst.selectedYear;
 		}
-		var date = (day ? (typeof day === "object" ? day :
-			this._daylightSavingAdjust(new Date(year, month, day))) :
-			this._daylightSavingAdjust(new Date(inst.currentYear, inst.currentMonth, inst.currentDay)));
+        var date;
+        if(day) {
+            if(typeof day === 'object') {
+                date = day;
+            } else {
+                date = new Date();
+                date.setFullYear(year);
+                date.setMonth(month);
+                date.setDate(day);
+            }
+        } else {
+            date = new Date();
+            date.setFullYear(inst.currentYear);
+            date.setMonth(inst.currentMonth);
+            date.setDate(inst.currentDay);
+        }
+//		date = (day ? (typeof day === "object" ? day :
+//			this._daylightSavingAdjust(new Date(year, month, day))) :
+//			this._daylightSavingAdjust(new Date(inst.currentYear, inst.currentMonth, inst.currentDay)));
 		return this.formatDate(this._get(inst, "dateFormat"), date, this._getFormatConfig(inst));
 	}
 });
